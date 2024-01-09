@@ -1,0 +1,73 @@
+package cn.wnhyang.okay.admin.service;
+
+
+import cn.wnhyang.okay.admin.entity.DictDataDO;
+import cn.wnhyang.okay.admin.vo.dictdata.DictDataCreateReqVO;
+import cn.wnhyang.okay.admin.vo.dictdata.DictDataPageReqVO;
+import cn.wnhyang.okay.admin.vo.dictdata.DictDataUpdateReqVO;
+import cn.wnhyang.okay.framework.common.pojo.PageResult;
+
+import java.util.List;
+
+/**
+ * 字典数据表 服务类
+ *
+ * @author wnhyang
+ * @since 2023/09/13
+ */
+public interface DictDataService {
+
+    /**
+     * 创建字典数据
+     *
+     * @param reqVO 字典数据
+     * @return 字典数据id
+     */
+    Long createDictData(DictDataCreateReqVO reqVO);
+
+    /**
+     * 更新字典数据
+     *
+     * @param reqVO 字典数据
+     */
+    void updateDictData(DictDataUpdateReqVO reqVO);
+
+    /**
+     * 删除字典数据
+     *
+     * @param id 字典数据id
+     */
+    void deleteDictData(Long id);
+
+    /**
+     * 查询字典数据列表
+     *
+     * @return 字典数据列表
+     */
+    List<DictDataDO> getDictDataList();
+
+    /**
+     * 分页查询字段数据
+     *
+     * @param reqVO 分页请求
+     * @return 字典数据
+     */
+    PageResult<DictDataDO> getDictDataPage(DictDataPageReqVO reqVO);
+
+    /**
+     * 查询详细字典数据
+     *
+     * @param id 字典数据id
+     * @return 字典数据
+     */
+    DictDataDO getDictData(Long id);
+
+    /**
+     * 通过字典类型和字典数据获取字典
+     *
+     * @param dictType 字典类型
+     * @param value    字典数据
+     * @return 字典
+     */
+    DictDataDO getDictData(String dictType, String value);
+}
