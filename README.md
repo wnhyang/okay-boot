@@ -1,22 +1,32 @@
-# okay-boot
+<p align="center">
+	<img alt="logo" src="https://jsd.cdn.zzko.cn/gh/wnhyang/picx-images-hosting@master/20240114/1705225534591.webp" width="150" height="150">
+</p>
+<h1 align="center" style="margin: 30px 0 30px; font-weight: bold;">okay-boot</h1>
+<h4 align="center">中后台管理系统，为简单而生！</h4>
+<p align="center">
+	<a href="https://github.com/wnhyang/okay-boot/stargazers"><img src="https://img.shields.io/github/stars/wnhyang/okay-boot?style=flat-square&logo=GitHub"></a>
+	<a href="https://github.com/wnhyang/okay-boot/blob/master/LICENSE"><img src="https://img.shields.io/github/license/wnhyang/okay-boot?style=flat-square"></a>
+</p>
 
-首先声明，本项目参考于多个开源项目，目前还在完善中
+## 前言
 
-* ruoyi: https://gitee.com/y_project/RuoYi
-* ruoyi-cloud: https://gitee.com/y_project/RuoYi-Cloud
-* ruoyi-vue-pro: https://gitee.com/zhijiantianya/ruoyi-vue-pro
-* yudao-cloud: https://gitee.com/zhijiantianya/yudao-cloud
++ 项目源码：[https://github.com/wnhyang/okay-boot](https://github.com/wnhyang/okay-boot)
++ 项目文档：[https://www.yuque.com/wnhyang/okay/](https://www.yuque.com/wnhyang/okay/)
++ 项目演示：暂无
++ 重要：项目还在完善中，期待我们共同成长！
++ 开源不易，点个star鼓励一下吧！
 
-## 新手必读
+## okay-boot介绍
 
-项目历程：todo
+okay取自日常用语ok，表示一切顺利。项目出发点是基于优秀开源项目，提供快速开发平台。
 
+**okay-boot**是一个基于Spring Boot、Spring Cloud、Sa-Token、Mybatis Plus、Redisson开发的中后台管理系统。算一个练手的项目，现在的开源项目越做越大，越做越复杂，对于新手并不友好，本项目旨在除去大型开源项目的复杂性，提供一个简单、快速的开发平台，让开发者更方便地开发中后台项目。
 
-## 简介
+另外还有okay-cloud，是本项目的微服务版。
 
-okay取自日常用语ok，表示一切顺利。 项目出发点是基于优秀开源项目，提供快速开发平台。
+未来计划做一套风控规则主导的开源项目
 
-架构图：todo
+### 架构图：todo
 
 * Java8，目前仅有Java8分支，未来会支持Java17+
 * 后端基础框架：Spring Boot + Spring Cloud + Spring Cloud Alibaba + Sa-Token + Mybatis Plus + Redisson
@@ -35,8 +45,6 @@ okay-boot okay-cloud
 ### 前端项目
 
 okay-vben-admin
-
-未来计划：风控系统
 
 ## 分支说明
 

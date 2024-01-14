@@ -1,5 +1,6 @@
 package cn.wnhyang.okay.admin.controller;
 
+import cn.dev33.satoken.annotation.SaIgnore;
 import cn.wnhyang.okay.admin.service.AuthService;
 import cn.wnhyang.okay.admin.vo.login.EmailLoginReqVO;
 import cn.wnhyang.okay.admin.vo.login.LoginReqVO;
@@ -24,6 +25,7 @@ import static cn.wnhyang.okay.framework.common.pojo.CommonResult.success;
 @RequiredArgsConstructor
 @Validated
 @RequestMapping("/auth")
+@SaIgnore
 public class AuthController {
 
     private final AuthService authService;
