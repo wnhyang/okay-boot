@@ -16,6 +16,9 @@ import java.util.List;
 @Setter
 public class StpInterfaceImpl implements StpInterface {
 
+    /**
+     * 登录服务
+     */
     private LoginService loginService;
 
     /**
