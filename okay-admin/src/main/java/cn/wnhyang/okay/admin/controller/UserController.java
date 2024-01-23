@@ -42,7 +42,7 @@ public class UserController {
 
     private final PermissionService permissionService;
 
-    private final LoginService loginService;
+    private final LoginService<LoginUser> loginService;
 
     /**
      * 创建用户
@@ -151,7 +151,7 @@ public class UserController {
     @OperateLog(module = "后台-用户", name = "查询用户信息")
     @SaCheckLogin
     public CommonResult<UserInfoRespVO> getUserInfo() {
-        LoginUser loginUser = (LoginUser) loginService.getLoginUser();
+        LoginUser loginUser = loginService.getLoginUser();
 
         if (loginUser == null) {
             return CommonResult.error(UNAUTHORIZED);

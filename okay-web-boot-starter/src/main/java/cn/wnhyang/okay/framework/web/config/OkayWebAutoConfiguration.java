@@ -1,5 +1,6 @@
 package cn.wnhyang.okay.framework.web.config;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.web.WebProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -15,14 +16,15 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  **/
 @AutoConfiguration
 @EnableConfigurationProperties({WebProperties.class})
+@Slf4j
 public class OkayWebAutoConfiguration implements WebMvcConfigurer {
 
     /**
      * 跨域配置
      */
     @Bean
-    public CorsFilter corsFilter()
-    {
+    public CorsFilter corsFilter() {
+        log.info("[CorsFilter][初始化corsFilter配置]");
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowCredentials(true);
         // 设置访问源地址

@@ -19,7 +19,7 @@ public class StpInterfaceImpl implements StpInterface {
     /**
      * 登录服务
      */
-    private LoginService loginService;
+    private LoginService<Login> loginService;
 
     /**
      * 返回指定账号id所拥有的权限码集合

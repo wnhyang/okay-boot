@@ -42,7 +42,7 @@ public class AuthService {
 
     private final LoginLogService loginLogService;
 
-    private final LoginService loginService;
+    private final LoginService<LoginUser> loginService;
 
     private final ValueOperations<String, String> valueOperations;
 
@@ -120,7 +120,7 @@ public class AuthService {
     }
 
     public void logout() {
-        LoginUser loginUser = (LoginUser) loginService.getLoginUser();
+        LoginUser loginUser = loginService.getLoginUser();
         if (loginUser != null) {
             StpUtil.logout();
             createLoginLog(loginUser.getId(), loginUser.getUsername(), LoginTypeEnum.LOGOUT_SELF, LoginResultEnum.SUCCESS);

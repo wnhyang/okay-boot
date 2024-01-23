@@ -17,7 +17,7 @@ public class WebExampleApplication {
             log.info("开始启动。。。");
             SpringApplication.run(WebExampleApplication.class, args);
         } catch (Throwable e) {
-            e.printStackTrace();
+            log.error("启动失败:", e);
         }
     }
 }

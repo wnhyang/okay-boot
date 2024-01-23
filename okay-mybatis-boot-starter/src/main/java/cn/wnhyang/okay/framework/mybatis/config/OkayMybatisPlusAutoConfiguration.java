@@ -1,5 +1,6 @@
 package cn.wnhyang.okay.framework.mybatis.config;
 
+import cn.wnhyang.okay.framework.common.core.Login;
 import cn.wnhyang.okay.framework.mybatis.core.handler.MybatisPlusMetaObjectHandler;
 import cn.wnhyang.okay.framework.web.core.service.LoginService;
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
@@ -34,7 +35,7 @@ public class OkayMybatisPlusAutoConfiguration {
     }
 
     @Bean
-    public MetaObjectHandler defaultMetaObjectHandler(LoginService loginService) {
+    public MetaObjectHandler defaultMetaObjectHandler(LoginService<Login> loginService) {
         log.info("[MetaObjectHandler][初始化defaultMetaObjectHandler配置]");
         // 自动填充参数类
         MybatisPlusMetaObjectHandler metaObjectHandler = new MybatisPlusMetaObjectHandler();

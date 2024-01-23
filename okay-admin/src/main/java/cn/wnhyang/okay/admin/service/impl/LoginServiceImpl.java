@@ -1,4 +1,4 @@
-package cn.wnhyang.okay.framework.security.core.service;
+package cn.wnhyang.okay.admin.service.impl;
 
 import cn.dev33.satoken.context.SaHolder;
 import cn.dev33.satoken.context.model.SaStorage;
@@ -6,7 +6,7 @@ import cn.dev33.satoken.session.SaSession;
 import cn.dev33.satoken.stp.SaLoginModel;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.core.util.ObjectUtil;
-import cn.wnhyang.okay.framework.common.core.Login;
+import cn.wnhyang.okay.admin.login.LoginUser;
 import cn.wnhyang.okay.framework.common.enums.DeviceTypeEnum;
 import cn.wnhyang.okay.framework.common.enums.UserTypeEnum;
 import cn.wnhyang.okay.framework.web.core.service.LoginService;
@@ -15,17 +15,17 @@ import cn.wnhyang.okay.framework.web.core.service.LoginService;
  * @author wnhyang
  * @date 2024/1/5
  **/
-public class LoginServiceImpl implements LoginService<Login> {
+public class LoginServiceImpl implements LoginService<LoginUser> {
 
     public static final String LOGIN_USER_KEY = "login_user";
     public static final String USER_KEY = "user_id";
 
-    public void login(Login loginUser) {
+    public void login(LoginUser loginUser) {
         login(loginUser, null);
     }
 
     @Override
-    public void login(Login loginUser, DeviceTypeEnum deviceEnum) {
+    public void login(LoginUser loginUser, DeviceTypeEnum deviceEnum) {
         SaStorage storage = SaHolder.getStorage();
         storage.set(LOGIN_USER_KEY, loginUser);
         storage.set(USER_KEY, loginUser.getId());
@@ -46,8 +46,8 @@ public class LoginServiceImpl implements LoginService<Login> {
     }
 
     @Override
-    public Login getLoginUser() {
-        Login loginUser = (Login) SaHolder.getStorage().get(LOGIN_USER_KEY);
+    public LoginUser getLoginUser() {
+        LoginUser loginUser = (LoginUser) SaHolder.getStorage().get(LOGIN_USER_KEY);
         if (loginUser != null) {
             return loginUser;
         }
@@ -58,7 +58,7 @@ public class LoginServiceImpl implements LoginService<Login> {
         if (ObjectUtil.isNull(session)) {
             return null;
         }
-        loginUser = (Login) session.get(LOGIN_USER_KEY);
+        loginUser = (LoginUser) session.get(LOGIN_USER_KEY);
         SaHolder.getStorage().set(LOGIN_USER_KEY, loginUser);
         return loginUser;
     }

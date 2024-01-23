@@ -17,7 +17,7 @@ public class AdminApplication {
             log.info("开始启动。。。");
             SpringApplication.run(AdminApplication.class, args);
         } catch (Throwable e) {
-            e.printStackTrace();
+            log.error("启动失败:", e);
         }
 
     }

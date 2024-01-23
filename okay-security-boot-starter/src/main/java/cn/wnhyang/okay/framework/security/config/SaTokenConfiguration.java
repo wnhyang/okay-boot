@@ -1,9 +1,10 @@
 package cn.wnhyang.okay.framework.security.config;
 
 import cn.dev33.satoken.stp.StpInterface;
-import cn.wnhyang.okay.framework.security.core.service.LoginServiceImpl;
+import cn.wnhyang.okay.framework.common.core.Login;
 import cn.wnhyang.okay.framework.security.core.service.StpInterfaceImpl;
 import cn.wnhyang.okay.framework.web.core.service.LoginService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.context.annotation.Bean;
 
@@ -12,15 +13,12 @@ import org.springframework.context.annotation.Bean;
  * @date 2023/7/28
  **/
 @AutoConfiguration
+@Slf4j
 public class SaTokenConfiguration {
 
     @Bean
-    public LoginService loginService() {
-        return new LoginServiceImpl();
-    }
-
-    @Bean
-    public StpInterface stpInterface(LoginService loginService) {
+    public StpInterface stpInterface(LoginService<Login> loginService) {
+        log.info("[StpInterface][初始化stpInterface配置]");
         StpInterfaceImpl stpInterface = new StpInterfaceImpl();
         stpInterface.setLoginService(loginService);
         return stpInterface;
