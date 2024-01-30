@@ -18,7 +18,6 @@ public class SaTokenConfiguration {
 
     @Bean
     public StpInterface stpInterface(LoginService<Login> loginService) {
-        log.info("[StpInterface][初始化stpInterface配置]");
         StpInterfaceImpl stpInterface = new StpInterfaceImpl();
         stpInterface.setLoginService(loginService);
         return stpInterface;

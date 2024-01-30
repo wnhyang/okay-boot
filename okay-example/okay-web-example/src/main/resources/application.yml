@@ -44,7 +44,7 @@ spring:
   mybatis-plus:
     configuration:
       map-underscore-to-camel-case: true
-      log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+      log-impl: org.apache.ibatis.logging.slf4j.Slf4jImpl
       auto-mapping-behavior: full
     global-config:
       db-config:
@@ -56,11 +56,13 @@ spring:
 okay:
   mybatis:
     mapper:
-      base-package: cn.wnhyang.okay.web
-    login: false
+      base-package: cn.wnhyang.okay.web.mapper
+    login: true
 
 logging:
   config: classpath:log4j2.xml
+  level:
+    cn.wnhyang.okay.web.mapper: debug
 
 # 定时任务
 xxl:

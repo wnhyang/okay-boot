@@ -3,6 +3,7 @@ package cn.wnhyang.okay.web.controller;
 import cn.wnhyang.okay.framework.common.pojo.CommonResult;
 import cn.wnhyang.okay.framework.common.pojo.PageResult;
 import cn.wnhyang.okay.web.convert.example.ExampleConvert;
+import cn.wnhyang.okay.web.entity.ExampleDO;
 import cn.wnhyang.okay.web.service.ExampleService;
 import cn.wnhyang.okay.web.vo.example.ExampleCreateReqVO;
 import cn.wnhyang.okay.web.vo.example.ExamplePageReqVO;
@@ -13,6 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 import static cn.wnhyang.okay.framework.common.pojo.CommonResult.success;
 
@@ -84,5 +86,16 @@ public class ExampleController {
     @GetMapping(value = "/get")
     public CommonResult<ExampleRespVO> getExample(@RequestParam("id") Long id) {
         return success(ExampleConvert.INSTANCE.convert(exampleService.getExample(id)));
+    }
+
+    @GetMapping("/add")
+    public CommonResult<Boolean> addExample() {
+        List<ExampleDO> exampleList = exampleService.getExampleList();
+
+        for (ExampleDO exampleDO : exampleList) {
+            exampleDO.addField2(1);
+        }
+        exampleService.updateBatch(exampleList);
+        return success(true);
     }
 }

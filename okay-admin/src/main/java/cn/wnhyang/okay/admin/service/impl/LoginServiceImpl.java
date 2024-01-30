@@ -1,7 +1,6 @@
 package cn.wnhyang.okay.admin.service.impl;
 
 import cn.dev33.satoken.context.SaHolder;
-import cn.dev33.satoken.context.model.SaStorage;
 import cn.dev33.satoken.session.SaSession;
 import cn.dev33.satoken.stp.SaLoginModel;
 import cn.dev33.satoken.stp.StpUtil;
@@ -26,9 +25,6 @@ public class LoginServiceImpl implements LoginService<LoginUser> {
 
     @Override
     public void login(LoginUser loginUser, DeviceTypeEnum deviceEnum) {
-        SaStorage storage = SaHolder.getStorage();
-        storage.set(LOGIN_USER_KEY, loginUser);
-        storage.set(USER_KEY, loginUser.getId());
         SaLoginModel model = new SaLoginModel();
         if (ObjectUtil.isNotNull(deviceEnum)) {
             model.setDevice(deviceEnum.getDevice());
@@ -47,10 +43,6 @@ public class LoginServiceImpl implements LoginService<LoginUser> {
 
     @Override
     public LoginUser getLoginUser() {
-        LoginUser loginUser = (LoginUser) SaHolder.getStorage().get(LOGIN_USER_KEY);
-        if (loginUser != null) {
-            return loginUser;
-        }
         if (!StpUtil.isLogin()) {
             return null;
         }
@@ -58,7 +50,7 @@ public class LoginServiceImpl implements LoginService<LoginUser> {
         if (ObjectUtil.isNull(session)) {
             return null;
         }
-        loginUser = (LoginUser) session.get(LOGIN_USER_KEY);
+        LoginUser loginUser = (LoginUser) session.get(LOGIN_USER_KEY);
         SaHolder.getStorage().set(LOGIN_USER_KEY, loginUser);
         return loginUser;
     }

@@ -18,10 +18,6 @@
             <artifactId>okay-web-boot-starter</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>cn.wnhyang.boot</groupId>
-            <artifactId>okay-log-boot-starter</artifactId>
-        </dependency>
 
         <dependency>
             <groupId>cn.wnhyang.boot</groupId>
@@ -36,6 +32,18 @@
         <dependency>
             <groupId>cn.wnhyang.boot</groupId>
             <artifactId>okay-job-boot-starter</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <exclusions>
+                <!--排除默认log-->
+                <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-logging</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
     </dependencies>
 

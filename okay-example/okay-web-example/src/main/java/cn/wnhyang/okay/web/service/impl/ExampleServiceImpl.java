@@ -11,6 +11,9 @@ import cn.wnhyang.okay.web.vo.example.ExampleUpdateReqVO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 /**
  * @author wnhyang
@@ -22,6 +25,11 @@ import org.springframework.stereotype.Service;
 public class ExampleServiceImpl implements ExampleService {
 
     private final ExampleMapper exampleMapper;
+
+    @Override
+    public List<ExampleDO> getExampleList() {
+        return exampleMapper.selectList();
+    }
 
     @Override
     public ExampleDO getExample(Long id) {
@@ -48,5 +56,11 @@ public class ExampleServiceImpl implements ExampleService {
     @Override
     public PageResult<ExampleDO> getExamplePage(ExamplePageReqVO reqVO) {
         return exampleMapper.selectPage(reqVO);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void updateBatch(List<ExampleDO> example) {
+        exampleMapper.updateBatch(example);
     }
 }

@@ -6,11 +6,15 @@ import cn.wnhyang.okay.web.vo.example.ExampleCreateReqVO;
 import cn.wnhyang.okay.web.vo.example.ExamplePageReqVO;
 import cn.wnhyang.okay.web.vo.example.ExampleUpdateReqVO;
 
+import java.util.List;
+
 /**
  * @author wnhyang
  * @date 2024/1/5
  **/
 public interface ExampleService {
+
+    List<ExampleDO> getExampleList();
 
     /**
      * 获取单个example
@@ -49,4 +53,6 @@ public interface ExampleService {
      * @return example分页
      */
     PageResult<ExampleDO> getExamplePage(ExamplePageReqVO reqVO);
+
+    void updateBatch(List<ExampleDO> example);
 }

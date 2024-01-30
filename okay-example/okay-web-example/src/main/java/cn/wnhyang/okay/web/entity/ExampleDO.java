@@ -37,4 +37,8 @@ public class ExampleDO extends BaseDO {
 
     @TableField("status")
     private Boolean status;
+
+    public void addField2(Integer field2) {
+        this.field2 += field2;
+    }
 }
