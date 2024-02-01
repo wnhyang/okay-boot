@@ -1,14 +1,19 @@
 package cn.wnhyang.okay.framework.web.config;
 
+import cn.wnhyang.okay.framework.web.core.xss.XssFilter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.web.WebProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author wnhyang
@@ -40,6 +45,20 @@ public class OkayWebAutoConfiguration implements WebMvcConfigurer {
         source.registerCorsConfiguration("/**", config);
         // 返回新的CorsFilter
         return new CorsFilter(source);
+    }
+
+    @Bean
+    public FilterRegistrationBean<XssFilter> xssFilterRegistrationBean() {
+        FilterRegistrationBean<XssFilter> filterRegistrationBean = new FilterRegistrationBean<>();
+        filterRegistrationBean.setFilter(new XssFilter());
+        filterRegistrationBean.setOrder(1);
+        filterRegistrationBean.setEnabled(true);
+        filterRegistrationBean.addUrlPatterns("/*");
+        Map<String, String> initParameters = new HashMap<>();
+        initParameters.put("excludes", "/favicon.ico,/img/*,/js/*,/css/*");
+        initParameters.put("isIncludeRichText", "true");
+        filterRegistrationBean.setInitParameters(initParameters);
+        return filterRegistrationBean;
     }
 
 }
