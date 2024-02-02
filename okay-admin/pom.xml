@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>cn.wnhyang.boot</groupId>
-        <artifactId>okay-dependencies</artifactId>
+        <artifactId>okay-framework</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
 
@@ -16,28 +16,28 @@
         <!-- Web 相关 -->
         <dependency>
             <groupId>cn.wnhyang.boot</groupId>
-            <artifactId>okay-security-boot-starter</artifactId>
+            <artifactId>okay-spring-boot-starter-security</artifactId>
         </dependency>
 
         <dependency>
             <groupId>cn.wnhyang.boot</groupId>
-            <artifactId>okay-log-boot-starter</artifactId>
+            <artifactId>okay-spring-boot-starter-log</artifactId>
         </dependency>
 
         <!-- DB 相关 -->
         <dependency>
             <groupId>cn.wnhyang.boot</groupId>
-            <artifactId>okay-mybatis-boot-starter</artifactId>
+            <artifactId>okay-spring-boot-starter-mybatis</artifactId>
         </dependency>
 
         <dependency>
             <groupId>cn.wnhyang.boot</groupId>
-            <artifactId>okay-redis-boot-starter</artifactId>
+            <artifactId>okay-spring-boot-starter-redis</artifactId>
         </dependency>
 
         <dependency>
             <groupId>cn.wnhyang.boot</groupId>
-            <artifactId>okay-job-boot-starter</artifactId>
+            <artifactId>okay-spring-boot-starter-job</artifactId>
         </dependency>
     </dependencies>
 
