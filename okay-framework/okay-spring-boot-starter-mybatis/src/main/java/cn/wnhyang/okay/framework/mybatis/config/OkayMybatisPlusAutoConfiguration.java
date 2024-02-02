@@ -1,6 +1,5 @@
 package cn.wnhyang.okay.framework.mybatis.config;
 
-import cn.wnhyang.okay.framework.common.core.Login;
 import cn.wnhyang.okay.framework.mybatis.core.handler.MybatisPlusMetaObjectHandler;
 import cn.wnhyang.okay.framework.web.core.service.LoginService;
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
@@ -9,6 +8,7 @@ import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerIntercept
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.annotations.Mapper;
 import org.mybatis.spring.annotation.MapperScan;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.context.annotation.Bean;
@@ -35,7 +35,7 @@ public class OkayMybatisPlusAutoConfiguration {
     }
 
     @Bean
-    public MetaObjectHandler defaultMetaObjectHandler(LoginService<Login> loginService) {
+    public MetaObjectHandler defaultMetaObjectHandler(@Autowired(required = false) LoginService loginService) {
         log.info("[MetaObjectHandler][初始化defaultMetaObjectHandler配置]");
         // 自动填充参数类
         MybatisPlusMetaObjectHandler metaObjectHandler = new MybatisPlusMetaObjectHandler();

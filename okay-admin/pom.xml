@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>cn.wnhyang.boot</groupId>
-        <artifactId>okay-framework</artifactId>
+        <artifactId>okay</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
 
@@ -13,15 +13,16 @@
     <packaging>jar</packaging>
 
     <dependencies>
-        <!-- Web 相关 -->
-        <dependency>
-            <groupId>cn.wnhyang.boot</groupId>
-            <artifactId>okay-spring-boot-starter-security</artifactId>
-        </dependency>
 
         <dependency>
             <groupId>cn.wnhyang.boot</groupId>
             <artifactId>okay-spring-boot-starter-log</artifactId>
+        </dependency>
+
+        <!-- Web 相关 -->
+        <dependency>
+            <groupId>cn.wnhyang.boot</groupId>
+            <artifactId>okay-spring-boot-starter-security</artifactId>
         </dependency>
 
         <!-- DB 相关 -->

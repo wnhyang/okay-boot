@@ -109,6 +109,11 @@ public class LoginUser implements Login, Serializable {
     }
 
     @Override
+    public Set<Long> getRoleIds() {
+        return CollectionUtils.convertSet(roles, RoleSimpleRespVO::getId);
+    }
+
+    @Override
     public Set<String> getRoleValues() {
         return CollectionUtils.convertSet(roles, RoleSimpleRespVO::getValue);
     }
@@ -116,9 +121,5 @@ public class LoginUser implements Login, Serializable {
     @Override
     public Set<String> getPermissions() {
         return permissions;
-    }
-
-    public Set<Long> getRoleIds() {
-        return CollectionUtils.convertSet(roles, RoleSimpleRespVO::getId);
     }
 }

@@ -11,7 +11,7 @@ import static cn.wnhyang.okay.framework.common.exception.util.ServiceExceptionUt
  * @author wnhyang
  * @date 2024/1/5
  **/
-public interface LoginService<T extends Login> {
+public interface LoginService {
 
     /**
      * 登录
@@ -19,14 +19,14 @@ public interface LoginService<T extends Login> {
      * @param loginUser  登录信息
      * @param deviceEnum 设备类型
      */
-    void login(T loginUser, DeviceTypeEnum deviceEnum);
+    void login(Login loginUser, DeviceTypeEnum deviceEnum);
 
     /**
      * 获取当前登录用户
      *
      * @return 登录用户
      */
-    T getLoginUser();
+    <T extends Login> T getLoginUser();
 
     /**
      * 获取当前用户ID
@@ -34,7 +34,7 @@ public interface LoginService<T extends Login> {
      * @return 用户ID
      */
     default Long getUserId() {
-        T loginUser = getLoginUser();
+        Login loginUser = getLoginUser();
         if (loginUser == null) {
             throw exception(UNAUTHORIZED);
         }

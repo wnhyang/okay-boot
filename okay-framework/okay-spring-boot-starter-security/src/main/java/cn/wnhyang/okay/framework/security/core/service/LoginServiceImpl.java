@@ -1,11 +1,11 @@
-package cn.wnhyang.okay.admin.service.impl;
+package cn.wnhyang.okay.framework.security.core.service;
 
 import cn.dev33.satoken.context.SaHolder;
 import cn.dev33.satoken.session.SaSession;
 import cn.dev33.satoken.stp.SaLoginModel;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.core.util.ObjectUtil;
-import cn.wnhyang.okay.admin.login.LoginUser;
+import cn.wnhyang.okay.framework.common.core.Login;
 import cn.wnhyang.okay.framework.common.enums.DeviceTypeEnum;
 import cn.wnhyang.okay.framework.common.enums.UserTypeEnum;
 import cn.wnhyang.okay.framework.web.core.service.LoginService;
@@ -14,17 +14,17 @@ import cn.wnhyang.okay.framework.web.core.service.LoginService;
  * @author wnhyang
  * @date 2024/1/5
  **/
-public class LoginServiceImpl implements LoginService<LoginUser> {
+public class LoginServiceImpl implements LoginService {
 
     public static final String LOGIN_USER_KEY = "login_user";
     public static final String USER_KEY = "user_id";
 
-    public void login(LoginUser loginUser) {
+    public void login(Login loginUser) {
         login(loginUser, null);
     }
 
     @Override
-    public void login(LoginUser loginUser, DeviceTypeEnum deviceEnum) {
+    public void login(Login loginUser, DeviceTypeEnum deviceEnum) {
         SaLoginModel model = new SaLoginModel();
         if (ObjectUtil.isNotNull(deviceEnum)) {
             model.setDevice(deviceEnum.getDevice());
@@ -42,7 +42,8 @@ public class LoginServiceImpl implements LoginService<LoginUser> {
     }
 
     @Override
-    public LoginUser getLoginUser() {
+    @SuppressWarnings("unckecked")
+    public <T extends Login> T getLoginUser() {
         if (!StpUtil.isLogin()) {
             return null;
         }
@@ -50,7 +51,7 @@ public class LoginServiceImpl implements LoginService<LoginUser> {
         if (ObjectUtil.isNull(session)) {
             return null;
         }
-        LoginUser loginUser = (LoginUser) session.get(LOGIN_USER_KEY);
+        T loginUser = (T) session.get(LOGIN_USER_KEY);
         SaHolder.getStorage().set(LOGIN_USER_KEY, loginUser);
         return loginUser;
     }

@@ -30,6 +30,13 @@ public interface Login {
     Integer getType();
 
     /**
+     * 获取用户角色ID
+     *
+     * @return 用户角色id
+     */
+    Set<Long> getRoleIds();
+
+    /**
      * 获取用户角色
      *
      * @return 用户角色

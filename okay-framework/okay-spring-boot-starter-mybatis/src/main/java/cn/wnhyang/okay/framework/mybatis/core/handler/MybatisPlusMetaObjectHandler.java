@@ -22,7 +22,7 @@ public class MybatisPlusMetaObjectHandler implements MetaObjectHandler {
 
     private Boolean login;
 
-    private LoginService<Login> loginService;
+    private LoginService loginService;
 
     @Override
     public void insertFill(MetaObject metaObject) {

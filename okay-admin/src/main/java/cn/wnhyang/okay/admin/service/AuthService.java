@@ -15,6 +15,7 @@ import cn.wnhyang.okay.admin.vo.login.EmailLoginReqVO;
 import cn.wnhyang.okay.admin.vo.login.LoginReqVO;
 import cn.wnhyang.okay.admin.vo.login.LoginRespVO;
 import cn.wnhyang.okay.admin.vo.login.RegisterReqVO;
+import cn.wnhyang.okay.framework.common.core.Login;
 import cn.wnhyang.okay.framework.common.enums.CommonStatusEnum;
 import cn.wnhyang.okay.framework.common.enums.DeviceTypeEnum;
 import cn.wnhyang.okay.framework.common.enums.UserTypeEnum;
@@ -42,7 +43,7 @@ public class AuthService {
 
     private final LoginLogService loginLogService;
 
-    private final LoginService<LoginUser> loginService;
+    private final LoginService loginService;
 
     private final ValueOperations<String, String> valueOperations;
 
@@ -120,7 +121,7 @@ public class AuthService {
     }
 
     public void logout() {
-        LoginUser loginUser = loginService.getLoginUser();
+        Login loginUser = loginService.getLoginUser();
         if (loginUser != null) {
             StpUtil.logout();
             createLoginLog(loginUser.getId(), loginUser.getUsername(), LoginTypeEnum.LOGOUT_SELF, LoginResultEnum.SUCCESS);

@@ -6,11 +6,11 @@ import cn.wnhyang.okay.admin.convert.menu.MenuConvert;
 import cn.wnhyang.okay.admin.convert.user.UserConvert;
 import cn.wnhyang.okay.admin.entity.MenuDO;
 import cn.wnhyang.okay.admin.entity.UserDO;
-import cn.wnhyang.okay.admin.login.LoginUser;
 import cn.wnhyang.okay.admin.service.MenuService;
 import cn.wnhyang.okay.admin.service.PermissionService;
 import cn.wnhyang.okay.admin.service.UserService;
 import cn.wnhyang.okay.admin.vo.user.*;
+import cn.wnhyang.okay.framework.common.core.Login;
 import cn.wnhyang.okay.framework.common.pojo.CommonResult;
 import cn.wnhyang.okay.framework.common.pojo.PageResult;
 import cn.wnhyang.okay.framework.log.core.annotation.OperateLog;
@@ -42,7 +42,7 @@ public class UserController {
 
     private final PermissionService permissionService;
 
-    private final LoginService<LoginUser> loginService;
+    private final LoginService loginService;
 
     /**
      * 创建用户
@@ -151,7 +151,7 @@ public class UserController {
     @OperateLog(module = "后台-用户", name = "查询用户信息")
     @SaCheckLogin
     public CommonResult<UserInfoRespVO> getUserInfo() {
-        LoginUser loginUser = loginService.getLoginUser();
+        Login loginUser = loginService.getLoginUser();
 
         if (loginUser == null) {
             return CommonResult.error(UNAUTHORIZED);
