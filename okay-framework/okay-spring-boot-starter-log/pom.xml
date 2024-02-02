@@ -13,10 +13,6 @@
     <packaging>jar</packaging>
 
     <dependencies>
-        <dependency>
-            <groupId>cn.wnhyang.boot</groupId>
-            <artifactId>okay-common</artifactId>
-        </dependency>
 
         <dependency>
             <groupId>cn.wnhyang.boot</groupId>
