@@ -5,9 +5,11 @@ import cn.dev33.satoken.annotation.SaCheckPermission;
 import cn.wnhyang.okay.admin.convert.menu.MenuConvert;
 import cn.wnhyang.okay.admin.convert.user.UserConvert;
 import cn.wnhyang.okay.admin.entity.MenuDO;
+import cn.wnhyang.okay.admin.entity.RoleDO;
 import cn.wnhyang.okay.admin.entity.UserDO;
 import cn.wnhyang.okay.admin.service.MenuService;
 import cn.wnhyang.okay.admin.service.PermissionService;
+import cn.wnhyang.okay.admin.service.RoleService;
 import cn.wnhyang.okay.admin.service.UserService;
 import cn.wnhyang.okay.admin.vo.user.*;
 import cn.wnhyang.okay.framework.common.core.Login;
@@ -21,6 +23,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import static cn.wnhyang.okay.framework.common.exception.enums.GlobalErrorCodeConstants.UNAUTHORIZED;
 import static cn.wnhyang.okay.framework.common.pojo.CommonResult.success;
@@ -37,6 +40,8 @@ import static cn.wnhyang.okay.framework.common.pojo.CommonResult.success;
 public class UserController {
 
     private final UserService userService;
+
+    private final RoleService roleService;
 
     private final MenuService menuService;
 
@@ -125,7 +130,10 @@ public class UserController {
     @SaCheckPermission("system:user:query")
     public CommonResult<UserRespVO> getUser(@RequestParam("id") Long id) {
         UserDO user = userService.getUserById(id);
-        return success(UserConvert.INSTANCE.convert02(user));
+
+        List<RoleDO> userRoleList = roleService.getRoleList(permissionService.getUserRoleIdListByUserId(user.getId()));
+
+        return success(UserConvert.INSTANCE.convert(user, userRoleList));
     }
 
     /**
@@ -139,7 +147,13 @@ public class UserController {
     @SaCheckPermission("system:user:list")
     public CommonResult<PageResult<UserRespVO>> getUserPage(@Valid UserPageReqVO reqVO) {
         PageResult<UserDO> pageResult = userService.getUserPage(reqVO);
-        return success(UserConvert.INSTANCE.convert(pageResult));
+
+        List<UserRespVO> userRespVOList = pageResult.getList().stream().map(userDO -> {
+            List<RoleDO> userRoleList = roleService.getRoleList(permissionService.getUserRoleIdListByUserId(userDO.getId()));
+            return UserConvert.INSTANCE.convert(userDO, userRoleList);
+        }).collect(Collectors.toList());
+
+        return success(new PageResult<>(userRespVOList, pageResult.getTotal()));
     }
 
     /**

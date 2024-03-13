@@ -1,11 +1,13 @@
 package cn.wnhyang.okay.admin.vo.user;
 
+import cn.wnhyang.okay.admin.dto.user.RoleSimpleRespVO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * @author wnhyang
@@ -18,6 +20,8 @@ import java.time.LocalDateTime;
 public class UserRespVO extends UserBaseVO {
 
     private Long id;
+
+    private List<RoleSimpleRespVO> roles;
 
     private Integer status;
 
