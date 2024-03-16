@@ -1,14 +1,14 @@
 package cn.wnhyang.okay.admin.service.impl;
 
-import cn.wnhyang.okay.admin.convert.dictdata.DictDataConvert;
-import cn.wnhyang.okay.admin.entity.DictDataDO;
-import cn.wnhyang.okay.admin.entity.DictTypeDO;
+import cn.wnhyang.okay.admin.convert.DictDataConvert;
+import cn.wnhyang.okay.admin.entity.DictDataPO;
+import cn.wnhyang.okay.admin.entity.DictTypePO;
 import cn.wnhyang.okay.admin.mapper.DictDataMapper;
 import cn.wnhyang.okay.admin.mapper.DictTypeMapper;
 import cn.wnhyang.okay.admin.service.DictDataService;
-import cn.wnhyang.okay.admin.vo.dictdata.DictDataCreateReqVO;
-import cn.wnhyang.okay.admin.vo.dictdata.DictDataPageReqVO;
-import cn.wnhyang.okay.admin.vo.dictdata.DictDataUpdateReqVO;
+import cn.wnhyang.okay.admin.vo.dictdata.DictDataCreateVO;
+import cn.wnhyang.okay.admin.vo.dictdata.DictDataPageVO;
+import cn.wnhyang.okay.admin.vo.dictdata.DictDataUpdateVO;
 import cn.wnhyang.okay.framework.common.enums.CommonStatusEnum;
 import cn.wnhyang.okay.framework.common.pojo.PageResult;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +17,7 @@ import org.springframework.stereotype.Service;
 import java.util.Comparator;
 import java.util.List;
 
-import static cn.wnhyang.okay.admin.enums.ErrorCodeConstants.*;
+import static cn.wnhyang.okay.admin.enums.ErrorCodes.*;
 import static cn.wnhyang.okay.framework.common.exception.util.ServiceExceptionUtil.exception;
 
 
@@ -38,28 +38,28 @@ public class DictDataServiceImpl implements DictDataService {
     /**
      * 排序 dictType > sort
      */
-    private static final Comparator<DictDataDO> COMPARATOR_TYPE_AND_SORT = Comparator
-            .comparing(DictDataDO::getDictType)
-            .thenComparingInt(DictDataDO::getSort);
+    private static final Comparator<DictDataPO> COMPARATOR_TYPE_AND_SORT = Comparator
+            .comparing(DictDataPO::getDictType)
+            .thenComparingInt(DictDataPO::getSort);
 
     @Override
-    public Long createDictData(DictDataCreateReqVO reqVO) {
+    public Long createDictData(DictDataCreateVO reqVO) {
         // 校验正确性
         validateDictDataForCreateOrUpdate(null, reqVO.getValue(), reqVO.getDictType());
 
         // 插入字典类型
-        DictDataDO dictData = DictDataConvert.INSTANCE.convert(reqVO);
+        DictDataPO dictData = DictDataConvert.INSTANCE.convert(reqVO);
         dictDataMapper.insert(dictData);
         return dictData.getId();
     }
 
     @Override
-    public void updateDictData(DictDataUpdateReqVO reqVO) {
+    public void updateDictData(DictDataUpdateVO reqVO) {
         // 校验正确性
         validateDictDataForCreateOrUpdate(reqVO.getId(), reqVO.getValue(), reqVO.getDictType());
 
         // 更新字典类型
-        DictDataDO updateObj = DictDataConvert.INSTANCE.convert(reqVO);
+        DictDataPO updateObj = DictDataConvert.INSTANCE.convert(reqVO);
         dictDataMapper.updateById(updateObj);
     }
 
@@ -73,24 +73,24 @@ public class DictDataServiceImpl implements DictDataService {
     }
 
     @Override
-    public List<DictDataDO> getDictDataList() {
-        List<DictDataDO> list = dictDataMapper.selectList();
+    public List<DictDataPO> getDictDataList() {
+        List<DictDataPO> list = dictDataMapper.selectList();
         list.sort(COMPARATOR_TYPE_AND_SORT);
         return list;
     }
 
     @Override
-    public PageResult<DictDataDO> getDictDataPage(DictDataPageReqVO reqVO) {
+    public PageResult<DictDataPO> getDictDataPage(DictDataPageVO reqVO) {
         return dictDataMapper.selectPage(reqVO);
     }
 
     @Override
-    public DictDataDO getDictData(Long id) {
+    public DictDataPO getDictData(Long id) {
         return dictDataMapper.selectById(id);
     }
 
     @Override
-    public DictDataDO getDictData(String dictType, String value) {
+    public DictDataPO getDictData(String dictType, String value) {
         return dictDataMapper.selectByDictTypeAndValue(dictType, value);
     }
 
@@ -104,7 +104,7 @@ public class DictDataServiceImpl implements DictDataService {
     }
 
     public void validateDictDataValueUnique(Long id, String dictType, String value) {
-        DictDataDO dictData = dictDataMapper.selectByDictTypeAndValue(dictType, value);
+        DictDataPO dictData = dictDataMapper.selectByDictTypeAndValue(dictType, value);
         if (dictData == null) {
             return;
         }
@@ -121,14 +121,14 @@ public class DictDataServiceImpl implements DictDataService {
         if (id == null) {
             return;
         }
-        DictDataDO dictData = dictDataMapper.selectById(id);
+        DictDataPO dictData = dictDataMapper.selectById(id);
         if (dictData == null) {
             throw exception(DICT_DATA_NOT_EXISTS);
         }
     }
 
     public void validateDictTypeExists(String type) {
-        DictTypeDO dictType = dictTypeMapper.selectByType(type);
+        DictTypePO dictType = dictTypeMapper.selectByType(type);
         if (dictType == null) {
             throw exception(DICT_TYPE_NOT_EXISTS);
         }

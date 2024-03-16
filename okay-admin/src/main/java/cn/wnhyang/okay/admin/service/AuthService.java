@@ -5,16 +5,16 @@ import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.ReUtil;
 import cn.hutool.core.util.StrUtil;
-import cn.wnhyang.okay.admin.dto.loginlog.LoginLogCreateReqDTO;
-import cn.wnhyang.okay.admin.dto.user.UserCreateReqDTO;
+import cn.wnhyang.okay.admin.dto.LoginLogCreateDTO;
+import cn.wnhyang.okay.admin.dto.UserCreateDTO;
 import cn.wnhyang.okay.admin.enums.login.LoginResultEnum;
 import cn.wnhyang.okay.admin.enums.login.LoginTypeEnum;
 import cn.wnhyang.okay.admin.login.LoginUser;
-import cn.wnhyang.okay.admin.redis.RedisKeyConstants;
-import cn.wnhyang.okay.admin.vo.login.EmailLoginReqVO;
-import cn.wnhyang.okay.admin.vo.login.LoginReqVO;
+import cn.wnhyang.okay.admin.redis.RedisKeys;
+import cn.wnhyang.okay.admin.vo.login.EmailLoginVO;
 import cn.wnhyang.okay.admin.vo.login.LoginRespVO;
-import cn.wnhyang.okay.admin.vo.login.RegisterReqVO;
+import cn.wnhyang.okay.admin.vo.login.LoginVO;
+import cn.wnhyang.okay.admin.vo.login.RegisterVO;
 import cn.wnhyang.okay.framework.common.core.Login;
 import cn.wnhyang.okay.framework.common.enums.CommonStatusEnum;
 import cn.wnhyang.okay.framework.common.enums.DeviceTypeEnum;
@@ -28,7 +28,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Objects;
 
-import static cn.wnhyang.okay.admin.enums.ErrorCodeConstants.*;
+import static cn.wnhyang.okay.admin.enums.ErrorCodes.*;
 import static cn.wnhyang.okay.framework.common.exception.util.ServiceExceptionUtil.exception;
 
 /**
@@ -47,7 +47,7 @@ public class AuthService {
 
     private final ValueOperations<String, String> valueOperations;
 
-    public LoginRespVO login(LoginReqVO reqVO) {
+    public LoginRespVO login(LoginVO reqVO) {
         String account = reqVO.getAccount();
         LoginUser user;
         LoginTypeEnum loginTypeEnum;
@@ -85,7 +85,7 @@ public class AuthService {
         return loginRespVO;
     }
 
-    public LoginRespVO login(EmailLoginReqVO reqVO) {
+    public LoginRespVO login(EmailLoginVO reqVO) {
         String email = reqVO.getEmail();
         String code = reqVO.getCode();
         LoginUser user;
@@ -96,7 +96,7 @@ public class AuthService {
         } else {
             throw exception(AUTH_LOGIN_BAD_CREDENTIALS);
         }
-        String emailCode = valueOperations.get(RedisKeyConstants.EMAIL_CODE);
+        String emailCode = valueOperations.get(RedisKeys.EMAIL_CODE);
         if (!code.equals(emailCode)) {
             createLoginLog(user.getId(), email, loginTypeEnum, LoginResultEnum.BAD_EMAIL_CODE);
             throw exception(AUTH_LOGIN_BAD_EMAIL_CODE);
@@ -128,11 +128,11 @@ public class AuthService {
         }
     }
 
-    public void register(RegisterReqVO reqVO) {
+    public void register(RegisterVO reqVO) {
         String username = reqVO.getUsername();
         String password = reqVO.getPassword();
         Integer userType = UserTypeEnum.valueOf(reqVO.getUserType()).getType();
-        UserCreateReqDTO reqDTO = new UserCreateReqDTO();
+        UserCreateDTO reqDTO = new UserCreateDTO();
         reqDTO.setUsername(username);
         reqDTO.setNickname(username);
         reqDTO.setPassword(BCrypt.hashpw(password));
@@ -142,7 +142,7 @@ public class AuthService {
 
     private void createLoginLog(Long userId, String account, LoginTypeEnum loginTypeEnum, LoginResultEnum loginResultEnum) {
         // 插入登录日志
-        LoginLogCreateReqDTO reqDTO = new LoginLogCreateReqDTO();
+        LoginLogCreateDTO reqDTO = new LoginLogCreateDTO();
         reqDTO.setLoginType(loginTypeEnum.getType());
         reqDTO.setUserId(userId);
         reqDTO.setUserType(UserTypeEnum.PC.getType());

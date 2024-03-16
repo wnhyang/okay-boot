@@ -2,8 +2,8 @@ package cn.wnhyang.okay.admin.controller;
 
 import cn.dev33.satoken.annotation.SaCheckLogin;
 import cn.dev33.satoken.annotation.SaCheckPermission;
-import cn.wnhyang.okay.admin.convert.dictdata.DictDataConvert;
-import cn.wnhyang.okay.admin.entity.DictDataDO;
+import cn.wnhyang.okay.admin.convert.DictDataConvert;
+import cn.wnhyang.okay.admin.entity.DictDataPO;
 import cn.wnhyang.okay.admin.service.DictDataService;
 import cn.wnhyang.okay.admin.vo.dictdata.*;
 import cn.wnhyang.okay.framework.common.pojo.CommonResult;
@@ -39,7 +39,7 @@ public class DictDataController {
     @PostMapping("/create")
     @OperateLog(module = "后台-字典", name = "创建字典数据")
     @SaCheckPermission("system:dict:create")
-    public CommonResult<Long> createDictData(@Valid @RequestBody DictDataCreateReqVO reqVO) {
+    public CommonResult<Long> createDictData(@Valid @RequestBody DictDataCreateVO reqVO) {
         Long dictDataId = dictDataService.createDictData(reqVO);
         return success(dictDataId);
     }
@@ -53,7 +53,7 @@ public class DictDataController {
     @PutMapping("/update")
     @OperateLog(module = "后台-字典", name = "更新字典数据")
     @SaCheckPermission("system:dict:update")
-    public CommonResult<Boolean> updateDictData(@Valid @RequestBody DictDataUpdateReqVO reqVO) {
+    public CommonResult<Boolean> updateDictData(@Valid @RequestBody DictDataUpdateVO reqVO) {
         dictDataService.updateDictData(reqVO);
         return success(true);
     }
@@ -80,8 +80,8 @@ public class DictDataController {
     @GetMapping("/listAllSimple")
     @OperateLog(module = "后台-字典", name = "查询简单菜单数据")
     @SaCheckLogin
-    public CommonResult<List<DictDataSimpleRespVO>> getSimpleDictDataList() {
-        List<DictDataDO> list = dictDataService.getDictDataList();
+    public CommonResult<List<DictDataSimpleVO>> getSimpleDictDataList() {
+        List<DictDataPO> list = dictDataService.getDictDataList();
         return success(DictDataConvert.INSTANCE.convertList(list));
     }
 
@@ -94,7 +94,7 @@ public class DictDataController {
     @GetMapping("/page")
     @OperateLog(module = "后台-字典", name = "分页字典数据")
     @SaCheckPermission("system:dict:query")
-    public CommonResult<PageResult<DictDataRespVO>> getDictDataPage(@Valid DictDataPageReqVO reqVO) {
+    public CommonResult<PageResult<DictDataRespVO>> getDictDataPage(@Valid DictDataPageVO reqVO) {
         return success(DictDataConvert.INSTANCE.convertPage(dictDataService.getDictDataPage(reqVO)));
     }
 

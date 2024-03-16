@@ -4,7 +4,7 @@ import cn.wnhyang.okay.framework.common.core.Login;
 import cn.wnhyang.okay.framework.common.enums.DeviceTypeEnum;
 import cn.wnhyang.okay.framework.common.enums.UserConstants;
 
-import static cn.wnhyang.okay.framework.common.exception.enums.GlobalErrorCodeConstants.UNAUTHORIZED;
+import static cn.wnhyang.okay.framework.common.exception.GlobalErrorCode.UNAUTHORIZED;
 import static cn.wnhyang.okay.framework.common.exception.util.ServiceExceptionUtil.exception;
 
 /**

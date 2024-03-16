@@ -29,7 +29,6 @@ spring:
     host: redis
     port: 6379
     # cluster:
-    #   nodes: 123.60.165.53:6379
     database: 0
     lettuce:
       pool:

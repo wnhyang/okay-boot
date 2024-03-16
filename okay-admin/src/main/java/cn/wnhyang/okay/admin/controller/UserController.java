@@ -2,11 +2,11 @@ package cn.wnhyang.okay.admin.controller;
 
 import cn.dev33.satoken.annotation.SaCheckLogin;
 import cn.dev33.satoken.annotation.SaCheckPermission;
-import cn.wnhyang.okay.admin.convert.menu.MenuConvert;
-import cn.wnhyang.okay.admin.convert.user.UserConvert;
-import cn.wnhyang.okay.admin.entity.MenuDO;
-import cn.wnhyang.okay.admin.entity.RoleDO;
-import cn.wnhyang.okay.admin.entity.UserDO;
+import cn.wnhyang.okay.admin.convert.MenuConvert;
+import cn.wnhyang.okay.admin.convert.UserConvert;
+import cn.wnhyang.okay.admin.entity.MenuPO;
+import cn.wnhyang.okay.admin.entity.RolePO;
+import cn.wnhyang.okay.admin.entity.UserPO;
 import cn.wnhyang.okay.admin.service.MenuService;
 import cn.wnhyang.okay.admin.service.PermissionService;
 import cn.wnhyang.okay.admin.service.RoleService;
@@ -25,7 +25,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import static cn.wnhyang.okay.framework.common.exception.enums.GlobalErrorCodeConstants.UNAUTHORIZED;
+import static cn.wnhyang.okay.framework.common.exception.GlobalErrorCode.UNAUTHORIZED;
 import static cn.wnhyang.okay.framework.common.pojo.CommonResult.success;
 
 /**
@@ -58,7 +58,7 @@ public class UserController {
     @PostMapping("/create")
     @OperateLog(module = "后台-用户", name = "创建用户")
     @SaCheckPermission("system:user:create")
-    public CommonResult<Long> createUser(@Valid @RequestBody UserCreateReqVO reqVO) {
+    public CommonResult<Long> createUser(@Valid @RequestBody UserCreateVO reqVO) {
         Long id = userService.createUser(reqVO);
         return success(id);
     }
@@ -72,7 +72,7 @@ public class UserController {
     @PutMapping("/update")
     @OperateLog(module = "后台-用户", name = "修改用户信息")
     @SaCheckPermission("system:user:update")
-    public CommonResult<Boolean> updateUser(@Valid @RequestBody UserUpdateReqVO reqVO) {
+    public CommonResult<Boolean> updateUser(@Valid @RequestBody UserUpdateVO reqVO) {
         userService.updateUser(reqVO);
         return success(true);
     }
@@ -100,7 +100,7 @@ public class UserController {
     @PutMapping("/updatePassword")
     @OperateLog(module = "后台-用户", name = "更新用户密码")
     @SaCheckPermission("system:user:updatePassword")
-    public CommonResult<Boolean> updateUserPassword(@Valid @RequestBody UserUpdatePasswordReqVO reqVO) {
+    public CommonResult<Boolean> updateUserPassword(@Valid @RequestBody UserUpdatePasswordVO reqVO) {
         userService.updateUserPassword(reqVO);
         return success(true);
     }
@@ -114,7 +114,7 @@ public class UserController {
     @PutMapping("/updateStatus")
     @OperateLog(module = "后台-用户", name = "更新用户状态")
     @SaCheckPermission("system:user:update")
-    public CommonResult<Boolean> updateUserStatus(@Valid @RequestBody UserUpdateStatusReqVO reqVO) {
+    public CommonResult<Boolean> updateUserStatus(@Valid @RequestBody UserUpdateStatusVO reqVO) {
         userService.updateUserStatus(reqVO.getId(), reqVO.getStatus());
         return success(true);
     }
@@ -129,9 +129,9 @@ public class UserController {
     @OperateLog(module = "后台-用户", name = "查询用户")
     @SaCheckPermission("system:user:query")
     public CommonResult<UserRespVO> getUser(@RequestParam("id") Long id) {
-        UserDO user = userService.getUserById(id);
+        UserPO user = userService.getUserById(id);
 
-        List<RoleDO> userRoleList = roleService.getRoleList(permissionService.getUserRoleIdListByUserId(user.getId()));
+        List<RolePO> userRoleList = roleService.getRoleList(permissionService.getUserRoleIdListByUserId(user.getId()));
 
         return success(UserConvert.INSTANCE.convert(user, userRoleList));
     }
@@ -145,11 +145,11 @@ public class UserController {
     @GetMapping("/page")
     @OperateLog(module = "后台-用户", name = "查询用户列表")
     @SaCheckPermission("system:user:list")
-    public CommonResult<PageResult<UserRespVO>> getUserPage(@Valid UserPageReqVO reqVO) {
-        PageResult<UserDO> pageResult = userService.getUserPage(reqVO);
+    public CommonResult<PageResult<UserRespVO>> getUserPage(@Valid UserPageVO reqVO) {
+        PageResult<UserPO> pageResult = userService.getUserPage(reqVO);
 
         List<UserRespVO> userRespVOList = pageResult.getList().stream().map(userDO -> {
-            List<RoleDO> userRoleList = roleService.getRoleList(permissionService.getUserRoleIdListByUserId(userDO.getId()));
+            List<RolePO> userRoleList = roleService.getRoleList(permissionService.getUserRoleIdListByUserId(userDO.getId()));
             return UserConvert.INSTANCE.convert(userDO, userRoleList);
         }).collect(Collectors.toList());
 
@@ -164,7 +164,7 @@ public class UserController {
     @GetMapping("/info")
     @OperateLog(module = "后台-用户", name = "查询用户信息")
     @SaCheckLogin
-    public CommonResult<UserInfoRespVO> getUserInfo() {
+    public CommonResult<UserInfoVO> getUserInfo() {
         Login loginUser = loginService.getLoginUser();
 
         if (loginUser == null) {
@@ -172,14 +172,14 @@ public class UserController {
         }
         Long id = loginUser.getId();
 
-        UserDO user = userService.getUserById(id);
-        UserInfoRespVO respVO = new UserInfoRespVO();
-        UserInfoRespVO.UserVO userVO = UserConvert.INSTANCE.convert03(user);
+        UserPO user = userService.getUserById(id);
+        UserInfoVO respVO = new UserInfoVO();
+        UserInfoVO.UserVO userVO = UserConvert.INSTANCE.convert03(user);
         respVO.setUser(userVO);
         respVO.setRoles(loginUser.getRoleValues());
         respVO.setPermissions(loginUser.getPermissions());
 
-        List<MenuDO> menus;
+        List<MenuPO> menus;
         if (loginService.isAdministrator(id)) {
             menus = menuService.getMenuList();
         } else {

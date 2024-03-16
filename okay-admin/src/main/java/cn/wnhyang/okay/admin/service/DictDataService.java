@@ -1,10 +1,10 @@
 package cn.wnhyang.okay.admin.service;
 
 
-import cn.wnhyang.okay.admin.entity.DictDataDO;
-import cn.wnhyang.okay.admin.vo.dictdata.DictDataCreateReqVO;
-import cn.wnhyang.okay.admin.vo.dictdata.DictDataPageReqVO;
-import cn.wnhyang.okay.admin.vo.dictdata.DictDataUpdateReqVO;
+import cn.wnhyang.okay.admin.entity.DictDataPO;
+import cn.wnhyang.okay.admin.vo.dictdata.DictDataCreateVO;
+import cn.wnhyang.okay.admin.vo.dictdata.DictDataPageVO;
+import cn.wnhyang.okay.admin.vo.dictdata.DictDataUpdateVO;
 import cn.wnhyang.okay.framework.common.pojo.PageResult;
 
 import java.util.List;
@@ -23,14 +23,14 @@ public interface DictDataService {
      * @param reqVO 字典数据
      * @return 字典数据id
      */
-    Long createDictData(DictDataCreateReqVO reqVO);
+    Long createDictData(DictDataCreateVO reqVO);
 
     /**
      * 更新字典数据
      *
      * @param reqVO 字典数据
      */
-    void updateDictData(DictDataUpdateReqVO reqVO);
+    void updateDictData(DictDataUpdateVO reqVO);
 
     /**
      * 删除字典数据
@@ -44,7 +44,7 @@ public interface DictDataService {
      *
      * @return 字典数据列表
      */
-    List<DictDataDO> getDictDataList();
+    List<DictDataPO> getDictDataList();
 
     /**
      * 分页查询字段数据
@@ -52,7 +52,7 @@ public interface DictDataService {
      * @param reqVO 分页请求
      * @return 字典数据
      */
-    PageResult<DictDataDO> getDictDataPage(DictDataPageReqVO reqVO);
+    PageResult<DictDataPO> getDictDataPage(DictDataPageVO reqVO);
 
     /**
      * 查询详细字典数据
@@ -60,7 +60,7 @@ public interface DictDataService {
      * @param id 字典数据id
      * @return 字典数据
      */
-    DictDataDO getDictData(Long id);
+    DictDataPO getDictData(Long id);
 
     /**
      * 通过字典类型和字典数据获取字典
@@ -69,5 +69,5 @@ public interface DictDataService {
      * @param value    字典数据
      * @return 字典
      */
-    DictDataDO getDictData(String dictType, String value);
+    DictDataPO getDictData(String dictType, String value);
 }

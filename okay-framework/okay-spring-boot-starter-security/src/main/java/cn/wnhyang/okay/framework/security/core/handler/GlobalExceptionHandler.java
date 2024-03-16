@@ -19,7 +19,8 @@ import org.springframework.web.method.annotation.MethodArgumentTypeMismatchExcep
 
 import javax.servlet.http.HttpServletRequest;
 
-import static cn.wnhyang.okay.framework.common.exception.enums.GlobalErrorCodeConstants.*;
+import static cn.wnhyang.okay.framework.common.exception.GlobalErrorCode.*;
+
 
 /**
  * @author wnhyang

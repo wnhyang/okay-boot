@@ -1,10 +1,10 @@
 package cn.wnhyang.okay.admin.service;
 
 
-import cn.wnhyang.okay.admin.entity.RoleDO;
-import cn.wnhyang.okay.admin.vo.role.RoleCreateReqVO;
-import cn.wnhyang.okay.admin.vo.role.RolePageReqVO;
-import cn.wnhyang.okay.admin.vo.role.RoleUpdateReqVO;
+import cn.wnhyang.okay.admin.entity.RolePO;
+import cn.wnhyang.okay.admin.vo.role.RoleCreateVO;
+import cn.wnhyang.okay.admin.vo.role.RolePageVO;
+import cn.wnhyang.okay.admin.vo.role.RoleUpdateVO;
 import cn.wnhyang.okay.framework.common.enums.CommonStatusEnum;
 import cn.wnhyang.okay.framework.common.pojo.PageResult;
 
@@ -28,7 +28,7 @@ public interface RoleService {
      * @param ids 角色编号数组
      * @return 角色列表
      */
-    List<RoleDO> getRoleList(Collection<Long> ids);
+    List<RolePO> getRoleList(Collection<Long> ids);
 
     /**
      * 获取角色编码
@@ -37,7 +37,7 @@ public interface RoleService {
      * @return 角色编码
      */
     default Set<String> getRoleValueList(Set<Long> ids) {
-        return convertSet(getRoleList(ids), RoleDO::getValue);
+        return convertSet(getRoleList(ids), RolePO::getValue);
     }
 
     /**
@@ -46,14 +46,14 @@ public interface RoleService {
      * @param reqVO 角色信息
      * @return 角色
      */
-    Long createRole(RoleCreateReqVO reqVO);
+    Long createRole(RoleCreateVO reqVO);
 
     /**
      * 更新角色
      *
      * @param reqVO 角色信息
      */
-    void updateRole(RoleUpdateReqVO reqVO);
+    void updateRole(RoleUpdateVO reqVO);
 
     /**
      * 更新用户状态
@@ -76,7 +76,7 @@ public interface RoleService {
      * @param id id
      * @return 角色
      */
-    RoleDO getRole(Long id);
+    RolePO getRole(Long id);
 
     /**
      * 查询角色列表
@@ -84,7 +84,7 @@ public interface RoleService {
      * @param reqVO 请求
      * @return 角色列表
      */
-    PageResult<RoleDO> getRolePage(RolePageReqVO reqVO);
+    PageResult<RolePO> getRolePage(RolePageVO reqVO);
 
     /**
      * 获取角色列表
@@ -92,5 +92,5 @@ public interface RoleService {
      * @param status 状态
      * @return 角色列表
      */
-    List<RoleDO> getRoleList(CommonStatusEnum status);
+    List<RolePO> getRoleList(CommonStatusEnum status);
 }

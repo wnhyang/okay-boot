@@ -1,8 +1,8 @@
 package cn.wnhyang.okay.admin.mapper;
 
 
-import cn.wnhyang.okay.admin.entity.DictDataDO;
-import cn.wnhyang.okay.admin.vo.dictdata.DictDataPageReqVO;
+import cn.wnhyang.okay.admin.entity.DictDataPO;
+import cn.wnhyang.okay.admin.vo.dictdata.DictDataPageVO;
 import cn.wnhyang.okay.framework.common.pojo.PageResult;
 import cn.wnhyang.okay.framework.mybatis.core.mapper.BaseMapperX;
 import cn.wnhyang.okay.framework.mybatis.core.query.LambdaQueryWrapperX;
@@ -17,21 +17,21 @@ import java.util.Arrays;
  * @since 2023/09/13
  */
 @Mapper
-public interface DictDataMapper extends BaseMapperX<DictDataDO> {
+public interface DictDataMapper extends BaseMapperX<DictDataPO> {
 
-    default PageResult<DictDataDO> selectPage(DictDataPageReqVO reqVO) {
-        return selectPage(reqVO, new LambdaQueryWrapperX<DictDataDO>()
-                .likeIfPresent(DictDataDO::getLabel, reqVO.getLabel())
-                .eqIfPresent(DictDataDO::getDictType, reqVO.getDictType())
-                .eqIfPresent(DictDataDO::getStatus, reqVO.getStatus())
-                .orderByDesc(Arrays.asList(DictDataDO::getDictType, DictDataDO::getSort)));
+    default PageResult<DictDataPO> selectPage(DictDataPageVO reqVO) {
+        return selectPage(reqVO, new LambdaQueryWrapperX<DictDataPO>()
+                .likeIfPresent(DictDataPO::getLabel, reqVO.getLabel())
+                .eqIfPresent(DictDataPO::getDictType, reqVO.getDictType())
+                .eqIfPresent(DictDataPO::getStatus, reqVO.getStatus())
+                .orderByDesc(Arrays.asList(DictDataPO::getDictType, DictDataPO::getSort)));
     }
 
     default long selectCountByDictType(String dictType) {
-        return selectCount(DictDataDO::getDictType, dictType);
+        return selectCount(DictDataPO::getDictType, dictType);
     }
 
-    default DictDataDO selectByDictTypeAndValue(String dictType, String value) {
-        return selectOne(DictDataDO::getDictType, dictType, DictDataDO::getValue, value);
+    default DictDataPO selectByDictTypeAndValue(String dictType, String value) {
+        return selectOne(DictDataPO::getDictType, dictType, DictDataPO::getValue, value);
     }
 }

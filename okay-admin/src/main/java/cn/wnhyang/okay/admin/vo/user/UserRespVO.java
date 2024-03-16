@@ -1,6 +1,6 @@
 package cn.wnhyang.okay.admin.vo.user;
 
-import cn.wnhyang.okay.admin.dto.user.RoleSimpleRespVO;
+import cn.wnhyang.okay.admin.dto.RoleSimpleVO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -21,7 +21,7 @@ public class UserRespVO extends UserBaseVO {
 
     private Long id;
 
-    private List<RoleSimpleRespVO> roles;
+    private List<RoleSimpleVO> roles;
 
     private Integer status;
 

@@ -1,7 +1,7 @@
 package cn.wnhyang.okay.admin.controller;
 
 import cn.dev33.satoken.annotation.SaCheckPermission;
-import cn.wnhyang.okay.admin.convert.rsa.RsaConvert;
+import cn.wnhyang.okay.admin.convert.RsaConvert;
 import cn.wnhyang.okay.admin.service.RsaService;
 import cn.wnhyang.okay.admin.vo.rsa.*;
 import cn.wnhyang.okay.framework.common.pojo.CommonResult;
@@ -35,7 +35,7 @@ public class RsaController {
     @PostMapping("/generate")
     @OperateLog(module = "后台-密钥", name = "生成密钥")
     @SaCheckPermission("system:rsa:generate")
-    public CommonResult<RsaPairRespVO> generateKeyPair() {
+    public CommonResult<RsaPairVO> generateKeyPair() {
         return success(rsaService.generateKeyPair());
     }
 
@@ -48,7 +48,7 @@ public class RsaController {
     @PostMapping("/create")
     @OperateLog(module = "后台-密钥", name = "创建密钥")
     @SaCheckPermission("system:rsa:create")
-    public CommonResult<Long> createRsa(@Valid @RequestBody RsaCreateReqVO reqVO) {
+    public CommonResult<Long> createRsa(@Valid @RequestBody RsaCreateVO reqVO) {
         return success(rsaService.createSecretKey(reqVO));
     }
 
@@ -61,7 +61,7 @@ public class RsaController {
     @PutMapping("/update")
     @OperateLog(module = "后台-密钥", name = "更新密钥")
     @SaCheckPermission("system:rsa:update")
-    public CommonResult<Boolean> updateRsa(@Valid @RequestBody RsaUpdateReqVO reqVO) {
+    public CommonResult<Boolean> updateRsa(@Valid @RequestBody RsaUpdateVO reqVO) {
         rsaService.updateRsa(reqVO);
         return success(true);
     }
@@ -89,7 +89,7 @@ public class RsaController {
     @GetMapping("/page")
     @OperateLog(module = "后台-字典", name = "分页密钥")
     @SaCheckPermission("system:rsa:query")
-    public CommonResult<PageResult<RsaRespVO>> getDictDataPage(@Valid RsaPageReqVO reqVO) {
+    public CommonResult<PageResult<RsaRespVO>> getDictDataPage(@Valid RsaPageVO reqVO) {
         return success(RsaConvert.INSTANCE.convertPage(rsaService.getRsaPage(reqVO)));
     }
 

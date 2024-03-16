@@ -1,14 +1,14 @@
 package cn.wnhyang.okay.admin.service.impl;
 
 import cn.hutool.crypto.asymmetric.RSA;
-import cn.wnhyang.okay.admin.convert.rsa.RsaConvert;
-import cn.wnhyang.okay.admin.entity.RsaDO;
+import cn.wnhyang.okay.admin.convert.RsaConvert;
+import cn.wnhyang.okay.admin.entity.RsaPO;
 import cn.wnhyang.okay.admin.mapper.RsaMapper;
 import cn.wnhyang.okay.admin.service.RsaService;
-import cn.wnhyang.okay.admin.vo.rsa.RsaCreateReqVO;
-import cn.wnhyang.okay.admin.vo.rsa.RsaPageReqVO;
-import cn.wnhyang.okay.admin.vo.rsa.RsaPairRespVO;
-import cn.wnhyang.okay.admin.vo.rsa.RsaUpdateReqVO;
+import cn.wnhyang.okay.admin.vo.rsa.RsaCreateVO;
+import cn.wnhyang.okay.admin.vo.rsa.RsaPageVO;
+import cn.wnhyang.okay.admin.vo.rsa.RsaPairVO;
+import cn.wnhyang.okay.admin.vo.rsa.RsaUpdateVO;
 import cn.wnhyang.okay.framework.common.pojo.PageResult;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -26,25 +26,25 @@ public class RsaServiceImpl implements RsaService {
     private final RsaMapper rsaMapper;
 
     @Override
-    public RsaPairRespVO generateKeyPair() {
+    public RsaPairVO generateKeyPair() {
         RSA rsa = new RSA();
         String publicKey = rsa.getPublicKeyBase64();
         String privateKey = rsa.getPrivateKeyBase64();
-        RsaPairRespVO respVO = new RsaPairRespVO();
+        RsaPairVO respVO = new RsaPairVO();
         respVO.setPublicKey(publicKey).setPrivateKey(privateKey);
         return respVO;
     }
 
     @Override
-    public Long createSecretKey(RsaCreateReqVO reqVO) {
-        RsaDO rsaDO = RsaConvert.INSTANCE.convert(reqVO);
+    public Long createSecretKey(RsaCreateVO reqVO) {
+        RsaPO rsaDO = RsaConvert.INSTANCE.convert(reqVO);
         rsaMapper.insert(rsaDO);
         return rsaDO.getId();
     }
 
     @Override
-    public void updateRsa(RsaUpdateReqVO reqVO) {
-        RsaDO rsaDO = RsaConvert.INSTANCE.convert(reqVO);
+    public void updateRsa(RsaUpdateVO reqVO) {
+        RsaPO rsaDO = RsaConvert.INSTANCE.convert(reqVO);
         rsaMapper.updateById(rsaDO);
     }
 
@@ -54,12 +54,12 @@ public class RsaServiceImpl implements RsaService {
     }
 
     @Override
-    public PageResult<RsaDO> getRsaPage(RsaPageReqVO reqVO) {
+    public PageResult<RsaPO> getRsaPage(RsaPageVO reqVO) {
         return rsaMapper.selectPage(reqVO, null);
     }
 
     @Override
-    public RsaDO getRsa(Long id) {
+    public RsaPO getRsa(Long id) {
         return rsaMapper.selectById(id);
     }
 }

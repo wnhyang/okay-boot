@@ -2,14 +2,14 @@ package cn.wnhyang.okay.admin.service.impl;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
-import cn.wnhyang.okay.admin.convert.operatelog.OperateLogConvert;
-import cn.wnhyang.okay.admin.dto.operatelog.OperateLogCreateReqDTO;
-import cn.wnhyang.okay.admin.entity.OperateLogDO;
-import cn.wnhyang.okay.admin.entity.UserDO;
+import cn.wnhyang.okay.admin.convert.OperateLogConvert;
+import cn.wnhyang.okay.admin.dto.OperateLogCreateDTO;
+import cn.wnhyang.okay.admin.entity.OperateLogPO;
+import cn.wnhyang.okay.admin.entity.UserPO;
 import cn.wnhyang.okay.admin.mapper.OperateLogMapper;
 import cn.wnhyang.okay.admin.service.OperateLogService;
 import cn.wnhyang.okay.admin.service.UserService;
-import cn.wnhyang.okay.admin.vo.operatelog.OperateLogPageReqVO;
+import cn.wnhyang.okay.admin.vo.operatelog.OperateLogPageVO;
 import cn.wnhyang.okay.framework.common.pojo.CommonResult;
 import cn.wnhyang.okay.framework.common.pojo.PageResult;
 import cn.wnhyang.okay.framework.log.core.dto.LogCreateReqDTO;
@@ -19,8 +19,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.Collection;
 
-import static cn.wnhyang.okay.admin.entity.OperateLogDO.JAVA_METHOD_ARGS_MAX_LENGTH;
-import static cn.wnhyang.okay.admin.entity.OperateLogDO.RESULT_MAX_LENGTH;
+import static cn.wnhyang.okay.admin.entity.OperateLogPO.JAVA_METHOD_ARGS_MAX_LENGTH;
+import static cn.wnhyang.okay.admin.entity.OperateLogPO.RESULT_MAX_LENGTH;
 import static cn.wnhyang.okay.framework.common.pojo.CommonResult.success;
 import static cn.wnhyang.okay.framework.common.util.CollectionUtils.convertSet;
 
@@ -44,19 +44,19 @@ public class OperateLogServiceImpl implements OperateLogService, LogService {
      * @param createReqDTO 操作日志请求
      */
     @Override
-    public void createOperateLog(OperateLogCreateReqDTO createReqDTO) {
-        OperateLogDO logDO = OperateLogConvert.INSTANCE.convert(createReqDTO);
+    public void createOperateLog(OperateLogCreateDTO createReqDTO) {
+        OperateLogPO logDO = OperateLogConvert.INSTANCE.convert(createReqDTO);
         logDO.setJavaMethodArgs(StrUtil.subPre(logDO.getJavaMethodArgs(), JAVA_METHOD_ARGS_MAX_LENGTH));
         logDO.setResultData(StrUtil.subPre(logDO.getResultData(), RESULT_MAX_LENGTH));
         operateLogMapper.insert(logDO);
     }
 
     @Override
-    public PageResult<OperateLogDO> getOperateLogPage(OperateLogPageReqVO reqVO) {
+    public PageResult<OperateLogPO> getOperateLogPage(OperateLogPageVO reqVO) {
         // 处理基于用户昵称的查询
         Collection<Long> userIds = null;
         if (StrUtil.isNotEmpty(reqVO.getUserNickname())) {
-            userIds = convertSet(userService.getUserListByNickname(reqVO.getUserNickname()), UserDO::getId);
+            userIds = convertSet(userService.getUserListByNickname(reqVO.getUserNickname()), UserPO::getId);
             if (CollUtil.isEmpty(userIds)) {
                 return PageResult.empty();
             }
@@ -67,7 +67,7 @@ public class OperateLogServiceImpl implements OperateLogService, LogService {
 
     @Override
     public CommonResult<Boolean> createLog(LogCreateReqDTO reqDTO) {
-        OperateLogCreateReqDTO operateLog = OperateLogConvert.INSTANCE.convert(reqDTO);
+        OperateLogCreateDTO operateLog = OperateLogConvert.INSTANCE.convert(reqDTO);
         createOperateLog(operateLog);
         return success(true);
     }

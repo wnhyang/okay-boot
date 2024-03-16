@@ -1,8 +1,8 @@
 package cn.wnhyang.okay.admin.mapper;
 
 
-import cn.wnhyang.okay.admin.entity.RoleDO;
-import cn.wnhyang.okay.admin.vo.role.RolePageReqVO;
+import cn.wnhyang.okay.admin.entity.RolePO;
+import cn.wnhyang.okay.admin.vo.role.RolePageVO;
 import cn.wnhyang.okay.framework.common.pojo.PageResult;
 import cn.wnhyang.okay.framework.mybatis.core.mapper.BaseMapperX;
 import cn.wnhyang.okay.framework.mybatis.core.query.LambdaQueryWrapperX;
@@ -15,22 +15,22 @@ import org.apache.ibatis.annotations.Mapper;
  * @since 2023/05/14
  */
 @Mapper
-public interface RoleMapper extends BaseMapperX<RoleDO> {
+public interface RoleMapper extends BaseMapperX<RolePO> {
 
-    default RoleDO selectByName(String name) {
-        return selectOne(RoleDO::getName, name);
+    default RolePO selectByName(String name) {
+        return selectOne(RolePO::getName, name);
     }
 
-    default RoleDO selectByValue(String value) {
-        return selectOne(RoleDO::getValue, value);
+    default RolePO selectByValue(String value) {
+        return selectOne(RolePO::getValue, value);
     }
 
-    default PageResult<RoleDO> selectPage(RolePageReqVO reqVO) {
-        return selectPage(reqVO, new LambdaQueryWrapperX<RoleDO>()
-                .likeIfPresent(RoleDO::getName, reqVO.getName())
-                .likeIfPresent(RoleDO::getValue, reqVO.getValue())
-                .eqIfPresent(RoleDO::getStatus, reqVO.getStatus())
-                .betweenIfPresent(RoleDO::getCreateTime, reqVO.getStartTime(), reqVO.getEndTime())
-                .orderByDesc(RoleDO::getId));
+    default PageResult<RolePO> selectPage(RolePageVO reqVO) {
+        return selectPage(reqVO, new LambdaQueryWrapperX<RolePO>()
+                .likeIfPresent(RolePO::getName, reqVO.getName())
+                .likeIfPresent(RolePO::getValue, reqVO.getValue())
+                .eqIfPresent(RolePO::getStatus, reqVO.getStatus())
+                .betweenIfPresent(RolePO::getCreateTime, reqVO.getStartTime(), reqVO.getEndTime())
+                .orderByDesc(RolePO::getId));
     }
 }

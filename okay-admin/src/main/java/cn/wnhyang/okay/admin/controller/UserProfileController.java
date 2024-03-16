@@ -1,12 +1,12 @@
 package cn.wnhyang.okay.admin.controller;
 
 import cn.dev33.satoken.annotation.SaCheckLogin;
-import cn.wnhyang.okay.admin.convert.user.UserConvert;
-import cn.wnhyang.okay.admin.entity.UserDO;
+import cn.wnhyang.okay.admin.convert.UserConvert;
+import cn.wnhyang.okay.admin.entity.UserPO;
 import cn.wnhyang.okay.admin.service.UserService;
-import cn.wnhyang.okay.admin.vo.userprofile.UserProfileRespVO;
-import cn.wnhyang.okay.admin.vo.userprofile.UserProfileUpdatePasswordReqVO;
-import cn.wnhyang.okay.admin.vo.userprofile.UserProfileUpdateReqVO;
+import cn.wnhyang.okay.admin.vo.userprofile.UserProfileUpdatePasswordVO;
+import cn.wnhyang.okay.admin.vo.userprofile.UserProfileUpdateVO;
+import cn.wnhyang.okay.admin.vo.userprofile.UserProfileVO;
 import cn.wnhyang.okay.framework.common.pojo.CommonResult;
 import cn.wnhyang.okay.framework.log.core.annotation.OperateLog;
 import cn.wnhyang.okay.framework.web.core.service.LoginService;
@@ -38,8 +38,8 @@ public class UserProfileController {
     @GetMapping("/get")
     @OperateLog(module = "后台-用户设置", name = "查询登录用户信息")
     @SaCheckLogin
-    public CommonResult<UserProfileRespVO> getUserProfile() {
-        UserDO user = userService.getUserById(loginService.getUserId());
+    public CommonResult<UserProfileVO> getUserProfile() {
+        UserPO user = userService.getUserById(loginService.getUserId());
 
         return CommonResult.success(UserConvert.INSTANCE.convert04(user));
     }
@@ -50,7 +50,7 @@ public class UserProfileController {
     @PostMapping("/update")
     @OperateLog(module = "后台-用户设置", name = "修改用户信息")
     @SaCheckLogin
-    public CommonResult<Boolean> updateUserProfile(@Valid @RequestBody UserProfileUpdateReqVO reqVO) {
+    public CommonResult<Boolean> updateUserProfile(@Valid @RequestBody UserProfileUpdateVO reqVO) {
         userService.updateUserProfile(loginService.getUserId(), reqVO);
         return CommonResult.success(true);
     }
@@ -64,7 +64,7 @@ public class UserProfileController {
     @PutMapping("/updatePassword")
     @OperateLog(module = "后台-用户设置", name = "修改用户密码")
     @SaCheckLogin
-    public CommonResult<Boolean> updateUserPassword(@Valid @RequestBody UserProfileUpdatePasswordReqVO reqVO) {
+    public CommonResult<Boolean> updateUserPassword(@Valid @RequestBody UserProfileUpdatePasswordVO reqVO) {
         userService.updateUserPassword(loginService.getUserId(), reqVO);
         return CommonResult.success(true);
     }

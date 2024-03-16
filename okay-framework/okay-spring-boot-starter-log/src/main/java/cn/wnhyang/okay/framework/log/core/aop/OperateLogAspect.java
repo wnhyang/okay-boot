@@ -37,8 +37,8 @@ import java.util.Map;
 import java.util.function.Predicate;
 import java.util.stream.IntStream;
 
-import static cn.wnhyang.okay.framework.common.exception.enums.GlobalErrorCodeConstants.INTERNAL_SERVER_ERROR;
-import static cn.wnhyang.okay.framework.common.exception.enums.GlobalErrorCodeConstants.SUCCESS;
+import static cn.wnhyang.okay.framework.common.exception.GlobalErrorCode.INTERNAL_SERVER_ERROR;
+import static cn.wnhyang.okay.framework.common.exception.GlobalErrorCode.SUCCESS;
 
 
 /**
@@ -91,8 +91,8 @@ public class OperateLogAspect {
         LogCreateReqDTO operateLogObj = null;
         try {
             // 没有接入链路追踪，暂时使用uuid作为请求ID
-            String requestId = IdUtil.simpleUUID();
-            MDC.put("requestId", requestId);
+            String traceId = IdUtil.simpleUUID();
+            MDC.put("traceId", traceId);
 
             operateLogObj = new LogCreateReqDTO();
             // 补全通用字段

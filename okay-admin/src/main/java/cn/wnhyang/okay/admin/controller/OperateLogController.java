@@ -1,13 +1,13 @@
 package cn.wnhyang.okay.admin.controller;
 
 import cn.dev33.satoken.annotation.SaCheckPermission;
-import cn.wnhyang.okay.admin.convert.operatelog.OperateLogConvert;
-import cn.wnhyang.okay.admin.entity.OperateLogDO;
-import cn.wnhyang.okay.admin.entity.UserDO;
+import cn.wnhyang.okay.admin.convert.OperateLogConvert;
+import cn.wnhyang.okay.admin.entity.OperateLogPO;
+import cn.wnhyang.okay.admin.entity.UserPO;
 import cn.wnhyang.okay.admin.service.OperateLogService;
 import cn.wnhyang.okay.admin.service.UserService;
-import cn.wnhyang.okay.admin.vo.operatelog.OperateLogPageReqVO;
-import cn.wnhyang.okay.admin.vo.operatelog.OperateLogRespVO;
+import cn.wnhyang.okay.admin.vo.operatelog.OperateLogPageVO;
+import cn.wnhyang.okay.admin.vo.operatelog.OperateLogVO;
 import cn.wnhyang.okay.framework.common.pojo.CommonResult;
 import cn.wnhyang.okay.framework.common.pojo.PageResult;
 import cn.wnhyang.okay.framework.common.util.CollectionUtils;
@@ -47,16 +47,16 @@ public class OperateLogController {
     @GetMapping("/page")
     @OperateLog(module = "后台-操作日志", name = "分页查询操作日志")
     @SaCheckPermission("system:operateLog:query")
-    public CommonResult<PageResult<OperateLogRespVO>> getOperateLogPage(@Valid OperateLogPageReqVO reqVO) {
-        PageResult<OperateLogDO> pageResult = operateLogService.getOperateLogPage(reqVO);
+    public CommonResult<PageResult<OperateLogVO>> getOperateLogPage(@Valid OperateLogPageVO reqVO) {
+        PageResult<OperateLogPO> pageResult = operateLogService.getOperateLogPage(reqVO);
 
         // 获得拼接需要的数据
-        Collection<Long> userIds = CollectionUtils.convertList(pageResult.getList(), OperateLogDO::getUserId);
-        Map<Long, UserDO> userMap = userService.getUserMap(userIds);
+        Collection<Long> userIds = CollectionUtils.convertList(pageResult.getList(), OperateLogPO::getUserId);
+        Map<Long, UserPO> userMap = userService.getUserMap(userIds);
         // 拼接数据
-        List<OperateLogRespVO> list = new ArrayList<>(pageResult.getList().size());
+        List<OperateLogVO> list = new ArrayList<>(pageResult.getList().size());
         pageResult.getList().forEach(operateLog -> {
-            OperateLogRespVO respVO = OperateLogConvert.INSTANCE.convert(operateLog);
+            OperateLogVO respVO = OperateLogConvert.INSTANCE.convert(operateLog);
             respVO.setUserNickname(userMap.get(operateLog.getUserId()).getNickname());
             list.add(respVO);
         });

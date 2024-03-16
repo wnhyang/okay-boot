@@ -1,6 +1,6 @@
 package cn.wnhyang.okay.admin.vo.login;
 
-import cn.wnhyang.okay.admin.dto.user.RoleSimpleRespVO;
+import cn.wnhyang.okay.admin.dto.RoleSimpleVO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -22,5 +22,5 @@ public class LoginRespVO {
 
     private String token;
 
-    private List<RoleSimpleRespVO> roles;
+    private List<RoleSimpleVO> roles;
 }

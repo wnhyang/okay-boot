@@ -2,8 +2,8 @@ package cn.wnhyang.okay.admin.controller;
 
 import cn.dev33.satoken.annotation.SaCheckLogin;
 import cn.dev33.satoken.annotation.SaCheckPermission;
-import cn.wnhyang.okay.admin.convert.dicttype.DictTypeConvert;
-import cn.wnhyang.okay.admin.entity.DictTypeDO;
+import cn.wnhyang.okay.admin.convert.DictTypeConvert;
+import cn.wnhyang.okay.admin.entity.DictTypePO;
 import cn.wnhyang.okay.admin.service.DictTypeService;
 import cn.wnhyang.okay.admin.vo.dicttype.*;
 import cn.wnhyang.okay.framework.common.pojo.CommonResult;
@@ -39,7 +39,7 @@ public class DictTypeController {
     @PostMapping("/create")
     @OperateLog(module = "后台-字典", name = "创建字典类型")
     @SaCheckPermission("system:dict:create")
-    public CommonResult<Long> createDictType(@Valid @RequestBody DictTypeCreateReqVO reqVO) {
+    public CommonResult<Long> createDictType(@Valid @RequestBody DictTypeCreateVO reqVO) {
         Long dictTypeId = dictTypeService.createDictType(reqVO);
         return success(dictTypeId);
     }
@@ -53,7 +53,7 @@ public class DictTypeController {
     @PutMapping("/update")
     @OperateLog(module = "后台-字典", name = "更新字典类型")
     @SaCheckPermission("system:dict:update")
-    public CommonResult<Boolean> updateDictType(@Valid @RequestBody DictTypeUpdateReqVO reqVO) {
+    public CommonResult<Boolean> updateDictType(@Valid @RequestBody DictTypeUpdateVO reqVO) {
         dictTypeService.updateDictType(reqVO);
         return success(true);
     }
@@ -81,7 +81,7 @@ public class DictTypeController {
     @GetMapping("/page")
     @OperateLog(module = "后台-字典", name = "分页字典类型")
     @SaCheckPermission("system:dict:query")
-    public CommonResult<PageResult<DictTypeRespVO>> pageDictTypes(@Valid DictTypePageReqVO reqVO) {
+    public CommonResult<PageResult<DictTypeRespVO>> pageDictTypes(@Valid DictTypePageVO reqVO) {
         return success(DictTypeConvert.INSTANCE.convertPage(dictTypeService.getDictTypePage(reqVO)));
     }
 
@@ -106,8 +106,8 @@ public class DictTypeController {
     @GetMapping("/listAllSimple")
     @OperateLog(module = "后台-字典", name = "查询简单字典类型")
     @SaCheckLogin
-    public CommonResult<List<DictTypeSimpleRespVO>> getSimpleDictTypeList() {
-        List<DictTypeDO> list = dictTypeService.getDictTypeList();
+    public CommonResult<List<DictTypeSimpleVO>> getSimpleDictTypeList() {
+        List<DictTypePO> list = dictTypeService.getDictTypeList();
         return success(DictTypeConvert.INSTANCE.convertList(list));
     }
 }

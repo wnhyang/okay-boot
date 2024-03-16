@@ -2,8 +2,8 @@ package cn.wnhyang.okay.admin.controller;
 
 import cn.dev33.satoken.annotation.SaCheckPermission;
 import cn.wnhyang.okay.admin.service.PermissionService;
-import cn.wnhyang.okay.admin.vo.permission.RoleMenuReqVO;
-import cn.wnhyang.okay.admin.vo.permission.UserRoleReqVO;
+import cn.wnhyang.okay.admin.vo.permission.RoleMenuVO;
+import cn.wnhyang.okay.admin.vo.permission.UserRoleVO;
 import cn.wnhyang.okay.framework.common.pojo.CommonResult;
 import cn.wnhyang.okay.framework.log.core.annotation.OperateLog;
 import lombok.RequiredArgsConstructor;
@@ -34,7 +34,7 @@ public class PermissionController {
     @PostMapping("/roleMenu")
     @OperateLog(module = "后台-权限", name = "给角色赋予菜单")
     @SaCheckPermission("system:permission:roleMenu")
-    public CommonResult<Boolean> roleMenu(@Valid @RequestBody RoleMenuReqVO reqVO) {
+    public CommonResult<Boolean> roleMenu(@Valid @RequestBody RoleMenuVO reqVO) {
         permissionService.roleMenu(reqVO.getRoleId(), reqVO.getMenuIds());
         return CommonResult.success(true);
     }
@@ -61,7 +61,7 @@ public class PermissionController {
     @PostMapping("/userRole")
     @OperateLog(module = "后台-权限", name = "给角色赋予菜单")
     @SaCheckPermission("system:permission:userRole")
-    public CommonResult<Boolean> roleMenu(@Valid @RequestBody UserRoleReqVO reqVO) {
+    public CommonResult<Boolean> roleMenu(@Valid @RequestBody UserRoleVO reqVO) {
         permissionService.userRole(reqVO.getUserId(), reqVO.getRoleIds());
         return CommonResult.success(true);
     }

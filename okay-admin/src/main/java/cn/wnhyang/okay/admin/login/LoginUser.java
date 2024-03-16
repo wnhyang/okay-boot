@@ -1,6 +1,6 @@
 package cn.wnhyang.okay.admin.login;
 
-import cn.wnhyang.okay.admin.dto.user.RoleSimpleRespVO;
+import cn.wnhyang.okay.admin.dto.RoleSimpleVO;
 import cn.wnhyang.okay.framework.common.core.Login;
 import cn.wnhyang.okay.framework.common.util.CollectionUtils;
 import lombok.Data;
@@ -86,7 +86,7 @@ public class LoginUser implements Login, Serializable {
     /**
      * 角色集合
      */
-    private List<RoleSimpleRespVO> roles;
+    private List<RoleSimpleVO> roles;
 
     /**
      * 菜单权限
@@ -110,12 +110,12 @@ public class LoginUser implements Login, Serializable {
 
     @Override
     public Set<Long> getRoleIds() {
-        return CollectionUtils.convertSet(roles, RoleSimpleRespVO::getId);
+        return CollectionUtils.convertSet(roles, RoleSimpleVO::getId);
     }
 
     @Override
     public Set<String> getRoleValues() {
-        return CollectionUtils.convertSet(roles, RoleSimpleRespVO::getValue);
+        return CollectionUtils.convertSet(roles, RoleSimpleVO::getValue);
     }
 
     @Override

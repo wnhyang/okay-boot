@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-public class RoleRespVO extends RoleBaseVO {
+public class RoleRespVO extends RoleCreateVO {
 
     private Long id;
 
