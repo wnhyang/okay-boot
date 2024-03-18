@@ -55,7 +55,7 @@ public class UserController {
      * @param reqVO 用户信息
      * @return 用户id
      */
-    @PostMapping("/create")
+    @PostMapping
     @OperateLog(module = "后台-用户", name = "创建用户")
     @SaCheckPermission("system:user:create")
     public CommonResult<Long> createUser(@Valid @RequestBody UserCreateVO reqVO) {
@@ -69,7 +69,7 @@ public class UserController {
      * @param reqVO 用户信息
      * @return 结果
      */
-    @PutMapping("/update")
+    @PutMapping
     @OperateLog(module = "后台-用户", name = "修改用户信息")
     @SaCheckPermission("system:user:update")
     public CommonResult<Boolean> updateUser(@Valid @RequestBody UserUpdateVO reqVO) {
@@ -83,7 +83,7 @@ public class UserController {
      * @param id 用户id
      * @return 结果
      */
-    @DeleteMapping("/delete")
+    @DeleteMapping
     @OperateLog(module = "后台-用户", name = "删除用户")
     @SaCheckPermission("system:user:delete")
     public CommonResult<Boolean> deleteUser(@RequestParam("id") Long id) {
@@ -125,15 +125,18 @@ public class UserController {
      * @param id id
      * @return 用户
      */
-    @GetMapping("/get")
+    @GetMapping
     @OperateLog(module = "后台-用户", name = "查询用户")
     @SaCheckPermission("system:user:query")
     public CommonResult<UserRespVO> getUser(@RequestParam("id") Long id) {
         UserPO user = userService.getUserById(id);
+        Set<Long> roleIds = permissionService.getUserRoleIdListByUserId(user.getId());
 
-        List<RolePO> userRoleList = roleService.getRoleList(permissionService.getUserRoleIdListByUserId(user.getId()));
+        List<RolePO> userRoleList = roleService.getRoleList(roleIds);
+        UserRespVO respVO = UserConvert.INSTANCE.convert(user, userRoleList);
+        respVO.setRoleIds(roleIds);
 
-        return success(UserConvert.INSTANCE.convert(user, userRoleList));
+        return success(respVO);
     }
 
     /**
@@ -149,8 +152,11 @@ public class UserController {
         PageResult<UserPO> pageResult = userService.getUserPage(reqVO);
 
         List<UserRespVO> userRespVOList = pageResult.getList().stream().map(userDO -> {
-            List<RolePO> userRoleList = roleService.getRoleList(permissionService.getUserRoleIdListByUserId(userDO.getId()));
-            return UserConvert.INSTANCE.convert(userDO, userRoleList);
+            Set<Long> roleIds = permissionService.getUserRoleIdListByUserId(userDO.getId());
+            List<RolePO> userRoleList = roleService.getRoleList(roleIds);
+            UserRespVO respVO = UserConvert.INSTANCE.convert(userDO, userRoleList);
+            respVO.setRoleIds(roleIds);
+            return respVO;
         }).collect(Collectors.toList());
 
         return success(new PageResult<>(userRespVOList, pageResult.getTotal()));

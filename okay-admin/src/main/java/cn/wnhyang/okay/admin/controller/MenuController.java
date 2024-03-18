@@ -35,7 +35,7 @@ public class MenuController {
      * @param reqVO 菜单数据
      * @return 菜单id
      */
-    @PostMapping("/create")
+    @PostMapping
     @OperateLog(module = "后台-菜单", name = "创建菜单")
     @SaCheckPermission("system:menu:create")
     public CommonResult<Long> createMenu(@Valid @RequestBody MenuCreateVO reqVO) {
@@ -48,7 +48,7 @@ public class MenuController {
      * @param reqVO 菜单数据
      * @return 结果
      */
-    @PutMapping("/update")
+    @PutMapping
     @OperateLog(module = "后台-菜单", name = "更新菜单")
     @SaCheckPermission("system:menu:update")
     public CommonResult<Boolean> updateMenu(@Valid @RequestBody MenuUpdateVO reqVO) {
@@ -62,7 +62,7 @@ public class MenuController {
      * @param id 菜单id
      * @return 结果
      */
-    @DeleteMapping("/delete")
+    @DeleteMapping
     @OperateLog(module = "后台-菜单", name = "删除菜单")
     @SaCheckPermission("system:menu:delete")
     public CommonResult<Boolean> deleteMenu(@RequestParam("id") Long id) {
@@ -89,7 +89,7 @@ public class MenuController {
      * @param id 菜单id
      * @return 菜单
      */
-    @GetMapping("/get")
+    @GetMapping
     @OperateLog(module = "后台-菜单", name = "查询菜单")
     @SaCheckPermission("system:menu:query")
     public CommonResult<MenuRespVO> getMenu(@RequestParam("id") Long id) {

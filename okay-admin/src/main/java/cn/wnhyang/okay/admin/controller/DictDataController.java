@@ -36,7 +36,7 @@ public class DictDataController {
      * @param reqVO 字典数据
      * @return 字典数据id
      */
-    @PostMapping("/create")
+    @PostMapping
     @OperateLog(module = "后台-字典", name = "创建字典数据")
     @SaCheckPermission("system:dict:create")
     public CommonResult<Long> createDictData(@Valid @RequestBody DictDataCreateVO reqVO) {
@@ -50,7 +50,7 @@ public class DictDataController {
      * @param reqVO 字典数据
      * @return 结果
      */
-    @PutMapping("/update")
+    @PutMapping
     @OperateLog(module = "后台-字典", name = "更新字典数据")
     @SaCheckPermission("system:dict:update")
     public CommonResult<Boolean> updateDictData(@Valid @RequestBody DictDataUpdateVO reqVO) {
@@ -64,7 +64,7 @@ public class DictDataController {
      * @param id 字典数据id
      * @return 结果
      */
-    @DeleteMapping("/delete")
+    @DeleteMapping
     @OperateLog(module = "后台-字典", name = "删除字典数据")
     @SaCheckPermission("system:dict:delete")
     public CommonResult<Boolean> deleteDictData(@RequestParam("id") Long id) {
@@ -77,7 +77,7 @@ public class DictDataController {
      *
      * @return 菜单列表
      */
-    @GetMapping("/listAllSimple")
+    @GetMapping("/simpleList")
     @OperateLog(module = "后台-字典", name = "查询简单菜单数据")
     @SaCheckLogin
     public CommonResult<List<DictDataSimpleVO>> getSimpleDictDataList() {
@@ -104,7 +104,7 @@ public class DictDataController {
      * @param id 字典数据id
      * @return 字典数据
      */
-    @GetMapping(value = "/get")
+    @GetMapping
     @OperateLog(module = "后台-字典", name = "查询详细字典数据")
     @SaCheckPermission("system:dict:query")
     public CommonResult<DictDataRespVO> getDictData(@RequestParam("id") Long id) {

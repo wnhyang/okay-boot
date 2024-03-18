@@ -57,7 +57,7 @@ public class AuthController {
      *
      * @return true
      */
-    @PostMapping("/generate/EmailCode")
+    @PostMapping("/generate/emailCode")
     public CommonResult<Boolean> generateCode(@RequestParam("account") String account) {
         authService.generateEmailCode(account);
         return success(true);

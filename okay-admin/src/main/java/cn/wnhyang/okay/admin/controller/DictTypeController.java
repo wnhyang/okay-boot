@@ -36,7 +36,7 @@ public class DictTypeController {
      * @param reqVO 字典类型
      * @return 字典id
      */
-    @PostMapping("/create")
+    @PostMapping
     @OperateLog(module = "后台-字典", name = "创建字典类型")
     @SaCheckPermission("system:dict:create")
     public CommonResult<Long> createDictType(@Valid @RequestBody DictTypeCreateVO reqVO) {
@@ -50,7 +50,7 @@ public class DictTypeController {
      * @param reqVO 字典数据
      * @return 结果
      */
-    @PutMapping("/update")
+    @PutMapping
     @OperateLog(module = "后台-字典", name = "更新字典类型")
     @SaCheckPermission("system:dict:update")
     public CommonResult<Boolean> updateDictType(@Valid @RequestBody DictTypeUpdateVO reqVO) {
@@ -64,7 +64,7 @@ public class DictTypeController {
      * @param id 字典类型id
      * @return 结果
      */
-    @DeleteMapping("/delete")
+    @DeleteMapping
     @OperateLog(module = "后台-字典", name = "删除字典类型")
     @SaCheckPermission("system:dict:delete")
     public CommonResult<Boolean> deleteDictType(@RequestParam("id") Long id) {
@@ -91,7 +91,7 @@ public class DictTypeController {
      * @param id 字典类型id
      * @return 字典详情
      */
-    @GetMapping(value = "/get")
+    @GetMapping
     @OperateLog(module = "后台-字典", name = "查询字典类型详情")
     @SaCheckPermission("system:dict:query")
     public CommonResult<DictTypeRespVO> getDictType(@RequestParam("id") Long id) {
@@ -103,7 +103,7 @@ public class DictTypeController {
      *
      * @return 字典类型
      */
-    @GetMapping("/listAllSimple")
+    @GetMapping("/simpleList")
     @OperateLog(module = "后台-字典", name = "查询简单字典类型")
     @SaCheckLogin
     public CommonResult<List<DictTypeSimpleVO>> getSimpleDictTypeList() {

@@ -22,6 +22,7 @@ import cn.wnhyang.okay.admin.vo.user.UserUpdatePasswordVO;
 import cn.wnhyang.okay.admin.vo.user.UserUpdateVO;
 import cn.wnhyang.okay.admin.vo.userprofile.UserProfileUpdatePasswordVO;
 import cn.wnhyang.okay.admin.vo.userprofile.UserProfileUpdateVO;
+import cn.wnhyang.okay.framework.common.enums.UserConstants;
 import cn.wnhyang.okay.framework.common.pojo.PageResult;
 import cn.wnhyang.okay.framework.common.util.CollectionUtils;
 import cn.wnhyang.okay.framework.mybatis.core.query.LambdaQueryWrapperX;
@@ -80,7 +81,8 @@ public class UserServiceImpl implements UserService {
     public Long createUser(UserCreateVO reqVO) {
         validateUserForCreateOrUpdate(null, reqVO.getUsername(), reqVO.getMobile(), reqVO.getEmail());
         UserPO user = UserConvert.INSTANCE.convert(reqVO);
-        user.setPassword(BCrypt.hashpw(reqVO.getPassword()));
+        // TODO，新建用户，初始密码默认或者通过邮箱发送
+        user.setPassword(BCrypt.hashpw(UserConstants.DEFAULT_PASSWORD));
         userMapper.insert(user);
         if (CollectionUtil.isNotEmpty(reqVO.getRoleIds())) {
             userRoleMapper.insertBatch(CollectionUtils.convertList(reqVO.getRoleIds(),

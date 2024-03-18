@@ -49,6 +49,7 @@ public class UserBaseVO {
     /**
      * 手机号码
      */
+    @Size(max = 11, message = "手机号码长度不能超过11个字符")
     private String mobile;
 
     /**

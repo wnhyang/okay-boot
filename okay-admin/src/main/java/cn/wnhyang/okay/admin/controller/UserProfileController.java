@@ -35,7 +35,7 @@ public class UserProfileController {
      *
      * @return 用户信息
      */
-    @GetMapping("/get")
+    @GetMapping
     @OperateLog(module = "后台-用户设置", name = "查询登录用户信息")
     @SaCheckLogin
     public CommonResult<UserProfileVO> getUserProfile() {
@@ -47,7 +47,7 @@ public class UserProfileController {
     /**
      * 修改用户信息
      */
-    @PostMapping("/update")
+    @PostMapping
     @OperateLog(module = "后台-用户设置", name = "修改用户信息")
     @SaCheckLogin
     public CommonResult<Boolean> updateUserProfile(@Valid @RequestBody UserProfileUpdateVO reqVO) {

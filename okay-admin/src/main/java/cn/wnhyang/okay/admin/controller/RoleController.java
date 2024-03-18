@@ -38,7 +38,7 @@ public class RoleController {
      * @param reqVO 角色信息
      * @return id
      */
-    @PostMapping("/create")
+    @PostMapping
     @OperateLog(module = "后台-角色", name = "创建角色")
     @SaCheckPermission("system:role:create")
     public CommonResult<Long> createRole(@Valid @RequestBody RoleCreateVO reqVO) {
@@ -51,7 +51,7 @@ public class RoleController {
      * @param reqVO 角色信息
      * @return 结果
      */
-    @PutMapping("/update")
+    @PutMapping
     @OperateLog(module = "后台-角色", name = "更新角色")
     @SaCheckPermission("system:role:update")
     public CommonResult<Boolean> updateRole(@Valid @RequestBody RoleUpdateVO reqVO) {
@@ -79,7 +79,7 @@ public class RoleController {
      * @param id 角色id
      * @return 结果
      */
-    @DeleteMapping("/delete")
+    @DeleteMapping
     @OperateLog(module = "后台-角色", name = "删除角色")
     @SaCheckPermission("system:role:delete")
     public CommonResult<Boolean> deleteRole(@RequestParam("id") Long id) {
@@ -93,7 +93,7 @@ public class RoleController {
      * @param id id
      * @return 角色信息
      */
-    @GetMapping("/get")
+    @GetMapping
     @OperateLog(module = "后台-角色", name = "查询角色")
     @SaCheckPermission("system:role:query")
     public CommonResult<RoleRespVO> getRole(@RequestParam("id") Long id) {

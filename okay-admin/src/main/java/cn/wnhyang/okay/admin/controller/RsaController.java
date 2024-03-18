@@ -45,7 +45,7 @@ public class RsaController {
      * @param reqVO 密钥，可以是单个私钥或公钥
      * @return id
      */
-    @PostMapping("/create")
+    @PostMapping
     @OperateLog(module = "后台-密钥", name = "创建密钥")
     @SaCheckPermission("system:rsa:create")
     public CommonResult<Long> createRsa(@Valid @RequestBody RsaCreateVO reqVO) {
@@ -58,7 +58,7 @@ public class RsaController {
      * @param reqVO 更新密钥
      * @return true
      */
-    @PutMapping("/update")
+    @PutMapping
     @OperateLog(module = "后台-密钥", name = "更新密钥")
     @SaCheckPermission("system:rsa:update")
     public CommonResult<Boolean> updateRsa(@Valid @RequestBody RsaUpdateVO reqVO) {
@@ -72,7 +72,7 @@ public class RsaController {
      * @param id 密钥id
      * @return true
      */
-    @DeleteMapping("/delete")
+    @DeleteMapping
     @OperateLog(module = "后台-密钥", name = "删除密钥")
     @SaCheckPermission("system:rsa:delete")
     public CommonResult<Boolean> deleteRsa(@RequestParam("id") Long id) {
@@ -99,7 +99,7 @@ public class RsaController {
      * @param id 字典数据id
      * @return 字典数据
      */
-    @GetMapping(value = "/get")
+    @GetMapping
     @OperateLog(module = "后台-字典", name = "查询详细密钥")
     @SaCheckPermission("system:rsa:query")
     public CommonResult<RsaRespVO> getDictData(@RequestParam("id") Long id) {
