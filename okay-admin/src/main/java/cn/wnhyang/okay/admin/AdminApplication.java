@@ -8,7 +8,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @author wnhyang
  * @date 2024/1/7
  **/
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = {"cn.wnhyang.okay.admin", "cn.wnhyang.okay.system"})
 @Slf4j
 public class AdminApplication {
 

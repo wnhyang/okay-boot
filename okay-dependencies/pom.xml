@@ -223,6 +223,12 @@
                 <version>${project.version}</version>
             </dependency>
 
+            <dependency>
+                <groupId>cn.wnhyang.boot</groupId>
+                <artifactId>okay-system</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 

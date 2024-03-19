@@ -55,7 +55,7 @@ spring:
 okay:
   mybatis:
     mapper:
-      base-package: cn.wnhyang.okay.admin.mapper
+      base-package: cn.wnhyang.okay.*.mapper
     login: true
 
 logging:

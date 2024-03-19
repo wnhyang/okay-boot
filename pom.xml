@@ -12,6 +12,7 @@
         <module>okay-admin</module>
         <module>okay-framework</module>
         <module>okay-dependencies</module>
+        <module>okay-system</module>
     </modules>
 
     <properties>
