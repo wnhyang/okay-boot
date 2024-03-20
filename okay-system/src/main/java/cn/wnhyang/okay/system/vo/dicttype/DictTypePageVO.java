@@ -22,7 +22,7 @@ public class DictTypePageVO extends PageParam {
 
     private String type;
 
-    private Integer status;
+    private Boolean status;
 
     @DateTimeFormat(pattern = DatePattern.NORM_DATETIME_PATTERN)
     private LocalDateTime startTime;

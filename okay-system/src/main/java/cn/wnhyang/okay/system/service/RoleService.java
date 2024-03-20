@@ -1,7 +1,6 @@
 package cn.wnhyang.okay.system.service;
 
 
-import cn.wnhyang.okay.framework.common.enums.CommonStatusEnum;
 import cn.wnhyang.okay.framework.common.pojo.PageResult;
 import cn.wnhyang.okay.system.entity.RolePO;
 import cn.wnhyang.okay.system.vo.role.RoleCreateVO;
@@ -61,7 +60,7 @@ public interface RoleService {
      * @param id     id
      * @param status 状态
      */
-    void updateRoleStatus(Long id, Integer status);
+    void updateRoleStatus(Long id, Boolean status);
 
     /**
      * 删除角色
@@ -92,5 +91,5 @@ public interface RoleService {
      * @param status 状态
      * @return 角色列表
      */
-    List<RolePO> getRoleList(CommonStatusEnum status);
+    List<RolePO> getRoleList(Boolean status);
 }

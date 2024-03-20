@@ -70,4 +70,12 @@ public interface DictDataService {
      * @return 字典
      */
     DictDataPO getDictData(String dictType, String value);
+
+    /**
+     * 通过字典类型获取字典数据列表
+     *
+     * @param type 字典类型
+     * @return 字典数据列表
+     */
+    List<DictDataPO> getDictDataListByDictType(String type);
 }

@@ -1,13 +1,12 @@
 package cn.wnhyang.okay.system.vo.user;
 
-import cn.wnhyang.okay.system.dto.RoleSimpleVO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
-import java.util.List;
+import java.util.Set;
 
 /**
  * @author wnhyang
@@ -17,13 +16,13 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-public class UserRespVO extends UserBaseVO {
+public class UserRespVO extends UserCreateVO {
 
     private Long id;
 
-    private List<RoleSimpleVO> roles;
+    private Set<String> roles;
 
-    private Integer status;
+    private Boolean status;
 
     private String loginIp;
 

@@ -11,5 +11,5 @@ public class MenuListVO {
 
     private String title;
 
-    private Integer status;
+    private Boolean status;
 }

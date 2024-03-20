@@ -9,7 +9,7 @@ import lombok.Getter;
  **/
 @Getter
 @AllArgsConstructor
-public enum LoginResultEnum {
+public enum LoginResult {
 
     /**
      * 成功

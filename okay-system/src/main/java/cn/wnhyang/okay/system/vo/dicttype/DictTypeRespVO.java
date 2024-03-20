@@ -19,7 +19,7 @@ public class DictTypeRespVO extends DictTypeCreateVO {
 
     private Long id;
 
-    private String type;
+    private Boolean standard;
 
     private LocalDateTime createTime;
 

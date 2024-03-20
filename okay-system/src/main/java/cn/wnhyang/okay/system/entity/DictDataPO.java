@@ -47,7 +47,7 @@ public class DictDataPO extends BasePO {
     private String value;
 
     /**
-     * 字典类型
+     * 字典类型id
      */
     @TableField("dict_type")
     private String dictType;
@@ -56,7 +56,7 @@ public class DictDataPO extends BasePO {
      * 状态（0正常 1停用）
      */
     @TableField("status")
-    private Integer status;
+    private Boolean status;
 
     /**
      * 备注

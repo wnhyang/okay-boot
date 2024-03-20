@@ -49,14 +49,17 @@ public class DictTypeServiceImpl implements DictTypeService {
         validateDictTypeForCreateOrUpdate(reqVO.getId(), reqVO.getName(), null);
 
         // 更新字典类型
-        DictTypePO updateObj = DictTypeConvert.INSTANCE.convert(reqVO);
-        dictTypeMapper.updateById(updateObj);
+        DictTypePO dictType = DictTypeConvert.INSTANCE.convert(reqVO);
+        dictTypeMapper.updateById(dictType);
     }
 
     @Override
     public void deleteDictType(Long id) {
         // 校验是否存在
         DictTypePO dictType = validateDictTypeExists(id);
+        if (dictType.getStandard()) {
+            throw exception(DICT_TYPE_IS_STANDARD);
+        }
         // 校验是否有字典数据
         if (dictDataMapper.selectCountByDictType(dictType.getType()) > 0) {
             throw exception(DICT_TYPE_HAS_CHILDREN);

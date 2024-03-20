@@ -4,7 +4,7 @@ import cn.wnhyang.okay.framework.common.pojo.PageResult;
 import cn.wnhyang.okay.framework.mybatis.core.mapper.BaseMapperX;
 import cn.wnhyang.okay.framework.mybatis.core.query.LambdaQueryWrapperX;
 import cn.wnhyang.okay.system.entity.LoginLogPO;
-import cn.wnhyang.okay.system.enums.login.LoginResultEnum;
+import cn.wnhyang.okay.system.enums.login.LoginResult;
 import cn.wnhyang.okay.system.vo.loginlog.LoginLogPageVO;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -23,9 +23,9 @@ public interface LoginLogMapper extends BaseMapperX<LoginLogPO> {
                 .likeIfPresent(LoginLogPO::getAccount, reqVO.getAccount())
                 .betweenIfPresent(LoginLogPO::getCreateTime, reqVO.getStartTime(), reqVO.getEndTime());
         if (Boolean.TRUE.equals(reqVO.getResult())) {
-            query.eq(LoginLogPO::getResult, LoginResultEnum.SUCCESS.getResult());
+            query.eq(LoginLogPO::getResult, LoginResult.SUCCESS.getResult());
         } else if (Boolean.FALSE.equals(reqVO.getResult())) {
-            query.gt(LoginLogPO::getResult, LoginResultEnum.SUCCESS.getResult());
+            query.gt(LoginLogPO::getResult, LoginResult.SUCCESS.getResult());
         }
         // 降序
         query.orderByDesc(LoginLogPO::getId);

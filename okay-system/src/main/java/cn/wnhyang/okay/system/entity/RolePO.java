@@ -51,7 +51,7 @@ public class RolePO extends BasePO {
      * 角色状态（0正常 1停用）
      */
     @TableField("status")
-    private Integer status;
+    private Boolean status;
 
     /**
      * 备注

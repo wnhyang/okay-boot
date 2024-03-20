@@ -9,7 +9,7 @@ import lombok.Getter;
  **/
 @Getter
 @AllArgsConstructor
-public enum LoginTypeEnum {
+public enum LoginType {
     /**
      * 账号密码登录
      */

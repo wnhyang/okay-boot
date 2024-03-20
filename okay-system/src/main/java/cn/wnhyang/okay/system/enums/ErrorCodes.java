@@ -72,6 +72,7 @@ public interface ErrorCodes {
     ErrorCode DICT_TYPE_NAME_DUPLICATE = new ErrorCode(1002006003, "已经存在该名字的字典类型");
     ErrorCode DICT_TYPE_TYPE_DUPLICATE = new ErrorCode(1002006004, "已经存在该类型的字典类型");
     ErrorCode DICT_TYPE_HAS_CHILDREN = new ErrorCode(1002006005, "无法删除，该字典类型还有字典数据");
+    ErrorCode DICT_TYPE_IS_STANDARD = new ErrorCode(1002006006, "无法删除，标准字典类型不可删除");
 
     // ========== 字典数据 1002007000 ==========
     ErrorCode DICT_DATA_NOT_EXISTS = new ErrorCode(1002007001, "当前字典数据不存在");

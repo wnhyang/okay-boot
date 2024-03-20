@@ -60,5 +60,5 @@ public class MenuCreateVO {
     private Boolean isShow;
 
     @NotNull(message = "状态不能为空")
-    private Integer status;
+    private Boolean status;
 }

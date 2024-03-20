@@ -11,7 +11,7 @@ import javax.validation.constraints.NotNull;
  **/
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class UserUpdateVO extends UserBaseVO {
+public class UserUpdateVO extends UserCreateVO {
 
     /**
      * 用户ID

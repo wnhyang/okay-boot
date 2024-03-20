@@ -1,7 +1,7 @@
 package cn.wnhyang.okay.system.service.impl;
 
 import cn.hutool.core.collection.CollectionUtil;
-import cn.wnhyang.okay.framework.common.enums.CommonStatusEnum;
+import cn.wnhyang.okay.framework.common.enums.CommonStatus;
 import cn.wnhyang.okay.framework.common.enums.UserConstants;
 import cn.wnhyang.okay.framework.common.pojo.PageResult;
 import cn.wnhyang.okay.system.convert.RoleConvert;
@@ -57,7 +57,7 @@ public class RoleServiceImpl implements RoleService {
     public Long createRole(RoleCreateVO reqVO) {
         validateRoleForCreateOrUpdate(null, reqVO.getName(), reqVO.getValue());
         RolePO role = RoleConvert.INSTANCE.convert(reqVO);
-        role.setStatus(CommonStatusEnum.ENABLE.getStatus());
+        role.setStatus(CommonStatus.ON);
         roleMapper.insert(role);
         return role.getId();
     }
@@ -79,7 +79,7 @@ public class RoleServiceImpl implements RoleService {
     @Override
     @CacheEvict(value = RedisKeys.ROLE, key = "#id")
     @Transactional(rollbackFor = Exception.class)
-    public void updateRoleStatus(Long id, Integer status) {
+    public void updateRoleStatus(Long id, Boolean status) {
         // 校验是否可以更新
         validateRoleForUpdate(id);
 
@@ -111,7 +111,7 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public List<RolePO> getRoleList(CommonStatusEnum status) {
+    public List<RolePO> getRoleList(Boolean status) {
         if (status == null) {
             return roleMapper.selectList();
         }

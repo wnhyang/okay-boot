@@ -85,7 +85,7 @@ public interface UserService {
      * @param id     id
      * @param status 状态
      */
-    void updateUserStatus(Long id, Integer status);
+    void updateUserStatus(Long id, Boolean status);
 
     /**
      * 根据用户名/手机号/邮箱获取用户信息

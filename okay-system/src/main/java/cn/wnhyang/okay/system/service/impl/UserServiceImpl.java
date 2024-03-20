@@ -123,7 +123,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void updateUserStatus(Long id, Integer status) {
+    public void updateUserStatus(Long id, Boolean status) {
         validateUserExists(id);
         UserPO user = new UserPO().setId(id).setStatus(status);
         userMapper.updateById(user);

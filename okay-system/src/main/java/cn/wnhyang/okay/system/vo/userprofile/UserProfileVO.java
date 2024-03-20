@@ -1,6 +1,6 @@
 package cn.wnhyang.okay.system.vo.userprofile;
 
-import cn.wnhyang.okay.system.vo.user.UserBaseVO;
+import cn.wnhyang.okay.system.vo.user.UserCreateVO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -16,11 +16,11 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-public class UserProfileVO extends UserBaseVO {
+public class UserProfileVO extends UserCreateVO {
 
     private Long id;
 
-    private Integer status;
+    private Boolean status;
 
     private String loginIp;
 

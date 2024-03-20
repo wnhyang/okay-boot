@@ -89,7 +89,7 @@ public class UserPO extends BasePO {
      * 帐号状态（0正常 1停用）
      */
     @TableField("status")
-    private Integer status;
+    private Boolean status;
 
     /**
      * 最后登录IP

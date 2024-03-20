@@ -1,6 +1,6 @@
 package cn.wnhyang.okay.system.service.impl;
 
-import cn.wnhyang.okay.framework.common.enums.CommonStatusEnum;
+import cn.wnhyang.okay.framework.common.enums.CommonStatus;
 import cn.wnhyang.okay.framework.common.pojo.PageResult;
 import cn.wnhyang.okay.system.convert.DictDataConvert;
 import cn.wnhyang.okay.system.entity.DictDataPO;
@@ -59,8 +59,8 @@ public class DictDataServiceImpl implements DictDataService {
         validateDictDataForCreateOrUpdate(reqVO.getId(), reqVO.getValue(), reqVO.getDictType());
 
         // 更新字典类型
-        DictDataPO updateObj = DictDataConvert.INSTANCE.convert(reqVO);
-        dictDataMapper.updateById(updateObj);
+        DictDataPO dictData = DictDataConvert.INSTANCE.convert(reqVO);
+        dictDataMapper.updateById(dictData);
     }
 
     @Override
@@ -92,6 +92,11 @@ public class DictDataServiceImpl implements DictDataService {
     @Override
     public DictDataPO getDictData(String dictType, String value) {
         return dictDataMapper.selectByDictTypeAndValue(dictType, value);
+    }
+
+    @Override
+    public List<DictDataPO> getDictDataListByDictType(String type) {
+        return dictDataMapper.selectListByDictType(type);
     }
 
     private void validateDictDataForCreateOrUpdate(Long id, String value, String dictType) {
@@ -132,7 +137,7 @@ public class DictDataServiceImpl implements DictDataService {
         if (dictType == null) {
             throw exception(DICT_TYPE_NOT_EXISTS);
         }
-        if (!CommonStatusEnum.ENABLE.getStatus().equals(dictType.getStatus())) {
+        if (!CommonStatus.ON.equals(dictType.getStatus())) {
             throw exception(DICT_TYPE_NOT_ENABLE);
         }
     }

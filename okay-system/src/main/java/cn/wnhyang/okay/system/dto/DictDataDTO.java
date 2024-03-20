@@ -15,5 +15,5 @@ public class DictDataDTO {
 
     private String dictType;
 
-    private Integer status;
+    private Boolean status;
 }

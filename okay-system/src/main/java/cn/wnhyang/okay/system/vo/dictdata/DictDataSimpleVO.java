@@ -9,6 +9,8 @@ import lombok.Data;
 @Data
 public class DictDataSimpleVO {
 
+    private Long id;
+
     private String dictType;
 
     private String value;

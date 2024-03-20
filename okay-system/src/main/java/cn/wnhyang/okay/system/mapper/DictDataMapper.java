@@ -9,6 +9,7 @@ import cn.wnhyang.okay.system.vo.dictdata.DictDataPageVO;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * 字典数据表 Mapper 接口
@@ -33,5 +34,9 @@ public interface DictDataMapper extends BaseMapperX<DictDataPO> {
 
     default DictDataPO selectByDictTypeAndValue(String dictType, String value) {
         return selectOne(DictDataPO::getDictType, dictType, DictDataPO::getValue, value);
+    }
+
+    default List<DictDataPO> selectListByDictType(String type){
+        return selectList(DictDataPO::getDictType, type);
     }
 }

@@ -41,10 +41,16 @@ public class DictTypePO extends BasePO {
     private String type;
 
     /**
+     * 是否标准字典（0否 1是）
+     */
+    @TableField("standard")
+    private Boolean standard;
+
+    /**
      * 状态（0正常 1停用）
      */
     @TableField("status")
-    private Integer status;
+    private Boolean status;
 
     /**
      * 备注

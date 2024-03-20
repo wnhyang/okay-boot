@@ -15,5 +15,5 @@ public class RoleUpdateStatusVO {
     private Long id;
 
     @NotNull(message = "状态不能为空")
-    private Integer status;
+    private Boolean status;
 }

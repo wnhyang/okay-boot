@@ -18,5 +18,5 @@ public class DictDataPageVO extends PageParam {
 
     private String dictType;
 
-    private Integer status;
+    private Boolean status;
 }

@@ -129,7 +129,7 @@ public class UserInfoVO {
         /**
          * 菜单状态
          */
-        private Integer status;
+        private Boolean status;
 
         /**
          * 子路由

@@ -30,7 +30,7 @@ public class DictDataCreateVO {
     private String dictType;
 
     @NotNull(message = "状态不能为空")
-    private Integer status;
+    private Boolean status;
 
     private String remark;
 }

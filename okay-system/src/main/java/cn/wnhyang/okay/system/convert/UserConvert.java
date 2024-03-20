@@ -17,6 +17,8 @@ import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * @author wnhyang
@@ -31,7 +33,11 @@ public interface UserConvert {
     default UserRespVO convert(UserPO userDO, List<RolePO> roleDOList) {
         UserRespVO userRespVO = convert02(userDO);
         if (CollUtil.isNotEmpty(roleDOList)) {
-            userRespVO.setRoles(RoleConvert.INSTANCE.convert02(roleDOList));
+            Set<String> roleNames = roleDOList.stream()
+                    .map(RolePO::getName)
+                    .collect(Collectors.toSet());
+
+            userRespVO.setRoles(roleNames);
         }
         return userRespVO;
     }

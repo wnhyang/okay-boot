@@ -26,7 +26,7 @@ public class UserPageVO extends PageParam {
 
     private String mobile;
 
-    private Integer status;
+    private Boolean status;
 
     @DateTimeFormat(pattern = DatePattern.NORM_DATETIME_PATTERN)
     private LocalDateTime startTime;

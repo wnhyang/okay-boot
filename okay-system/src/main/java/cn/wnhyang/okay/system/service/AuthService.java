@@ -6,7 +6,7 @@ import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.ReUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.wnhyang.okay.framework.common.core.Login;
-import cn.wnhyang.okay.framework.common.enums.CommonStatusEnum;
+import cn.wnhyang.okay.framework.common.enums.CommonStatus;
 import cn.wnhyang.okay.framework.common.enums.DeviceTypeEnum;
 import cn.wnhyang.okay.framework.common.enums.UserTypeEnum;
 import cn.wnhyang.okay.framework.common.util.RegexUtils;
@@ -14,8 +14,8 @@ import cn.wnhyang.okay.framework.common.util.ServletUtils;
 import cn.wnhyang.okay.framework.web.core.service.LoginService;
 import cn.wnhyang.okay.system.dto.LoginLogCreateDTO;
 import cn.wnhyang.okay.system.dto.UserCreateDTO;
-import cn.wnhyang.okay.system.enums.login.LoginResultEnum;
-import cn.wnhyang.okay.system.enums.login.LoginTypeEnum;
+import cn.wnhyang.okay.system.enums.login.LoginResult;
+import cn.wnhyang.okay.system.enums.login.LoginType;
 import cn.wnhyang.okay.system.login.LoginUser;
 import cn.wnhyang.okay.system.redis.RedisKeys;
 import cn.wnhyang.okay.system.vo.login.EmailLoginVO;
@@ -51,34 +51,34 @@ public class AuthService {
     public LoginRespVO login(LoginVO reqVO) {
         String account = reqVO.getAccount();
         LoginUser user;
-        LoginTypeEnum loginTypeEnum;
+        LoginType loginType;
         if (StrUtil.isNotEmpty(account)) {
             if (ReUtil.isMatch(RegexUtils.MOBILE, account)) {
                 user = userService.getUserInfo(account, account, "");
-                loginTypeEnum = LoginTypeEnum.LOGIN_MOBILE;
+                loginType = LoginType.LOGIN_MOBILE;
             } else if (ReUtil.isMatch(RegexUtils.EMAIL, account)) {
                 user = userService.getUserInfo(account, "", account);
-                loginTypeEnum = LoginTypeEnum.LOGIN_EMAIL;
+                loginType = LoginType.LOGIN_EMAIL;
             } else {
                 user = userService.getUserInfo(account, "", "");
-                loginTypeEnum = LoginTypeEnum.LOGIN_USERNAME;
+                loginType = LoginType.LOGIN_USERNAME;
             }
         } else {
             throw exception(AUTH_LOGIN_BAD_CREDENTIALS);
         }
         if (!BCrypt.checkpw(reqVO.getPassword(), user.getPassword())) {
-            createLoginLog(user.getId(), account, loginTypeEnum, LoginResultEnum.BAD_CREDENTIALS);
+            createLoginLog(user.getId(), account, loginType, LoginResult.BAD_CREDENTIALS);
             throw exception(AUTH_LOGIN_BAD_CREDENTIALS);
         }
         // 校验是否禁用
-        if (ObjectUtil.notEqual(user.getStatus(), CommonStatusEnum.ENABLE.getStatus())) {
-            createLoginLog(user.getId(), account, loginTypeEnum, LoginResultEnum.USER_DISABLED);
+        if (ObjectUtil.notEqual(user.getStatus(), CommonStatus.ON)) {
+            createLoginLog(user.getId(), account, loginType, LoginResult.USER_DISABLED);
             throw exception(AUTH_LOGIN_USER_DISABLED);
         }
 
         // 创建 Token 令牌，记录登录日志
         loginService.login(user, DeviceTypeEnum.PC);
-        createLoginLog(user.getId(), account, loginTypeEnum, LoginResultEnum.SUCCESS);
+        createLoginLog(user.getId(), account, loginType, LoginResult.SUCCESS);
         LoginRespVO loginRespVO = new LoginRespVO();
         loginRespVO.setUserId(user.getId());
         loginRespVO.setToken(StpUtil.getTokenValue());
@@ -90,27 +90,27 @@ public class AuthService {
         String email = reqVO.getEmail();
         String code = reqVO.getCode();
         LoginUser user;
-        LoginTypeEnum loginTypeEnum;
+        LoginType loginType;
         if (StrUtil.isNotEmpty(email) && ReUtil.isMatch(RegexUtils.EMAIL, email)) {
             user = userService.getUserInfo("", "", email);
-            loginTypeEnum = LoginTypeEnum.LOGIN_EMAIL_CODE;
+            loginType = LoginType.LOGIN_EMAIL_CODE;
         } else {
             throw exception(AUTH_LOGIN_BAD_CREDENTIALS);
         }
         String emailCode = valueOperations.get(RedisKeys.EMAIL_CODE);
         if (!code.equals(emailCode)) {
-            createLoginLog(user.getId(), email, loginTypeEnum, LoginResultEnum.BAD_EMAIL_CODE);
+            createLoginLog(user.getId(), email, loginType, LoginResult.BAD_EMAIL_CODE);
             throw exception(AUTH_LOGIN_BAD_EMAIL_CODE);
         }
         // 校验是否禁用
-        if (ObjectUtil.notEqual(user.getStatus(), CommonStatusEnum.ENABLE.getStatus())) {
-            createLoginLog(user.getId(), email, loginTypeEnum, LoginResultEnum.USER_DISABLED);
+        if (ObjectUtil.notEqual(user.getStatus(), CommonStatus.ON)) {
+            createLoginLog(user.getId(), email, loginType, LoginResult.USER_DISABLED);
             throw exception(AUTH_LOGIN_USER_DISABLED);
         }
 
         // 创建 Token 令牌，记录登录日志
         loginService.login(user, DeviceTypeEnum.PC);
-        createLoginLog(user.getId(), email, loginTypeEnum, LoginResultEnum.SUCCESS);
+        createLoginLog(user.getId(), email, loginType, LoginResult.SUCCESS);
         LoginRespVO loginRespVO = new LoginRespVO();
         loginRespVO.setUserId(user.getId());
         loginRespVO.setToken(StpUtil.getTokenValue());
@@ -125,7 +125,7 @@ public class AuthService {
         Login loginUser = loginService.getLoginUser();
         if (loginUser != null) {
             StpUtil.logout();
-            createLoginLog(loginUser.getId(), loginUser.getUsername(), LoginTypeEnum.LOGOUT_SELF, LoginResultEnum.SUCCESS);
+            createLoginLog(loginUser.getId(), loginUser.getUsername(), LoginType.LOGOUT_SELF, LoginResult.SUCCESS);
         }
     }
 
@@ -141,19 +141,19 @@ public class AuthService {
         userService.registerUser(reqDTO);
     }
 
-    private void createLoginLog(Long userId, String account, LoginTypeEnum loginTypeEnum, LoginResultEnum loginResultEnum) {
+    private void createLoginLog(Long userId, String account, LoginType loginType, LoginResult loginResult) {
         // 插入登录日志
         LoginLogCreateDTO reqDTO = new LoginLogCreateDTO();
-        reqDTO.setLoginType(loginTypeEnum.getType());
+        reqDTO.setLoginType(loginType.getType());
         reqDTO.setUserId(userId);
         reqDTO.setUserType(UserTypeEnum.PC.getType());
         reqDTO.setAccount(account);
         reqDTO.setUserAgent(ServletUtils.getUserAgent());
         reqDTO.setUserIp(ServletUtils.getClientIP());
-        reqDTO.setResult(loginResultEnum.getResult());
+        reqDTO.setResult(loginResult.getResult());
         loginLogService.createLoginLog(reqDTO);
         // 更新最后登录时间
-        if (userId != null && Objects.equals(LoginResultEnum.SUCCESS.getResult(), loginResultEnum.getResult())) {
+        if (userId != null && Objects.equals(LoginResult.SUCCESS.getResult(), loginResult.getResult())) {
             userService.updateUserLogin(userId, ServletUtils.getClientIP());
         }
     }

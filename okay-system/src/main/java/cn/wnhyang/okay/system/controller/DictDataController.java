@@ -1,7 +1,7 @@
 package cn.wnhyang.okay.system.controller;
 
-import cn.dev33.satoken.annotation.SaCheckLogin;
 import cn.dev33.satoken.annotation.SaCheckPermission;
+import cn.dev33.satoken.annotation.SaIgnore;
 import cn.wnhyang.okay.framework.common.pojo.CommonResult;
 import cn.wnhyang.okay.framework.common.pojo.PageResult;
 import cn.wnhyang.okay.framework.log.core.annotation.OperateLog;
@@ -79,7 +79,7 @@ public class DictDataController {
      */
     @GetMapping("/simpleList")
     @OperateLog(module = "后台-字典", name = "查询简单菜单数据")
-    @SaCheckLogin
+    @SaIgnore
     public CommonResult<List<DictDataSimpleVO>> getSimpleDictDataList() {
         List<DictDataPO> list = dictDataService.getDictDataList();
         return success(DictDataConvert.INSTANCE.convertList(list));
@@ -109,6 +109,20 @@ public class DictDataController {
     @SaCheckPermission("system:dict:query")
     public CommonResult<DictDataRespVO> getDictData(@RequestParam("id") Long id) {
         return success(DictDataConvert.INSTANCE.convert(dictDataService.getDictData(id)));
+    }
+
+    /**
+     * 根据字典类型查询字典数据
+     *
+     * @param type 字典类型
+     * @return 字典数据
+     */
+    @GetMapping("/byType")
+    @OperateLog(module = "后台-字典", name = "根据字典类型查询字典数据")
+    @SaIgnore
+    public CommonResult<List<DictDataSimpleVO>> getDictDataListByType(@RequestParam("type") String type) {
+        List<DictDataPO> list = dictDataService.getDictDataListByDictType(type);
+        return success(DictDataConvert.INSTANCE.convertList(list));
     }
 
 }

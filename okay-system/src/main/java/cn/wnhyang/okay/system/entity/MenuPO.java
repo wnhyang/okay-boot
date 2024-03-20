@@ -132,6 +132,6 @@ public class MenuPO extends BasePO {
      * 菜单状态
      */
     @TableField("status")
-    private Integer status;
+    private Boolean status;
 
 }

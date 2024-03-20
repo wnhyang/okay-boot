@@ -9,7 +9,7 @@ import lombok.Getter;
  **/
 @Getter
 @AllArgsConstructor
-public enum MenuTypeEnum {
+public enum MenuType {
 
     /**
      * 目录
