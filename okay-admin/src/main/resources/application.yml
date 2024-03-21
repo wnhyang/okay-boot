@@ -63,7 +63,7 @@ okay:
 logging:
   config: classpath:log4j2.xml
   level:
-    cn.wnhyang.okay.admin.mapper: debug
+    cn.wnhyang.okay.system.mapper: debug
 
 # 定时任务
 xxl:

@@ -13,6 +13,7 @@ import cn.wnhyang.okay.system.vo.dictdata.DictDataPageVO;
 import cn.wnhyang.okay.system.vo.dictdata.DictDataUpdateVO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Comparator;
 import java.util.List;
@@ -43,6 +44,7 @@ public class DictDataServiceImpl implements DictDataService {
             .thenComparingInt(DictDataPO::getSort);
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public Long createDictData(DictDataCreateVO reqVO) {
         // 校验正确性
         validateDictDataForCreateOrUpdate(null, reqVO.getValue(), reqVO.getDictType());
@@ -54,6 +56,7 @@ public class DictDataServiceImpl implements DictDataService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void updateDictData(DictDataUpdateVO reqVO) {
         // 校验正确性
         validateDictDataForCreateOrUpdate(reqVO.getId(), reqVO.getValue(), reqVO.getDictType());
@@ -64,6 +67,7 @@ public class DictDataServiceImpl implements DictDataService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void deleteDictData(Long id) {
         // 校验是否存在
         validateDictDataExists(id);

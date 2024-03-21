@@ -13,6 +13,8 @@ public class DictDataSimpleVO {
 
     private String dictType;
 
+    private String color;
+
     private String value;
 
     private String label;

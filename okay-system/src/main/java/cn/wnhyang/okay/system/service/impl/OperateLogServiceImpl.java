@@ -16,6 +16,7 @@ import cn.wnhyang.okay.system.service.UserService;
 import cn.wnhyang.okay.system.vo.operatelog.OperateLogPageVO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
 
@@ -44,6 +45,7 @@ public class OperateLogServiceImpl implements OperateLogService, LogService {
      * @param createReqDTO 操作日志请求
      */
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void createOperateLog(OperateLogCreateDTO createReqDTO) {
         OperateLogPO logDO = OperateLogConvert.INSTANCE.convert(createReqDTO);
         logDO.setJavaMethodArgs(StrUtil.subPre(logDO.getJavaMethodArgs(), JAVA_METHOD_ARGS_MAX_LENGTH));
@@ -66,6 +68,7 @@ public class OperateLogServiceImpl implements OperateLogService, LogService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public CommonResult<Boolean> createLog(LogCreateReqDTO reqDTO) {
         OperateLogCreateDTO operateLog = OperateLogConvert.INSTANCE.convert(reqDTO);
         createOperateLog(operateLog);

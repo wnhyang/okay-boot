@@ -29,6 +29,8 @@ public class DictDataCreateVO {
     @Size(max = 100, message = "字典类型长度不能超过100个字符")
     private String dictType;
 
+    private String color;
+
     @NotNull(message = "状态不能为空")
     private Boolean status;
 

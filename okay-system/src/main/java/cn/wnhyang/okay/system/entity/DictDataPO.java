@@ -53,6 +53,12 @@ public class DictDataPO extends BasePO {
     private String dictType;
 
     /**
+     * 字典标签颜色
+     */
+    @TableField("color")
+    private String color;
+
+    /**
      * 状态（0正常 1停用）
      */
     @TableField("status")

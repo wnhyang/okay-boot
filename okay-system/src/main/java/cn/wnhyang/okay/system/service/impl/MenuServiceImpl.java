@@ -10,6 +10,7 @@ import cn.wnhyang.okay.system.service.MenuService;
 import cn.wnhyang.okay.system.vo.menu.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -34,6 +35,7 @@ public class MenuServiceImpl implements MenuService {
     private final RoleMenuMapper roleMenuMapper;
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public Long createMenu(MenuCreateVO reqVO) {
         // 校验父菜单存在
         validateParentMenu(reqVO.getParentId(), null);
@@ -49,6 +51,7 @@ public class MenuServiceImpl implements MenuService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void updateMenu(MenuUpdateVO reqVO) {
         // 校验更新的菜单是否存在
         if (menuMapper.selectById(reqVO.getId()) == null) {
@@ -66,6 +69,7 @@ public class MenuServiceImpl implements MenuService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void deleteMenu(Long id) {
         // 校验是否还有子菜单
         if (menuMapper.selectCountByParentId(id) > 0) {
