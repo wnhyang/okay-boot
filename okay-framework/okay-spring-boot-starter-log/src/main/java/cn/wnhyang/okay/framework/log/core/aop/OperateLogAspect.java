@@ -10,7 +10,7 @@ import cn.wnhyang.okay.framework.common.util.JsonUtils;
 import cn.wnhyang.okay.framework.common.util.ServletUtils;
 import cn.wnhyang.okay.framework.log.core.annotation.OperateLog;
 import cn.wnhyang.okay.framework.log.core.dto.LogCreateReqDTO;
-import cn.wnhyang.okay.framework.log.core.enums.OperateTypeEnum;
+import cn.wnhyang.okay.framework.log.core.enums.OperateType;
 import cn.wnhyang.okay.framework.log.core.service.LogService;
 import cn.wnhyang.okay.framework.web.core.service.LoginService;
 import lombok.Setter;
@@ -175,7 +175,7 @@ public class OperateLogAspect {
         }
         if (operateLogObj.getType() == null) {
             RequestMethod requestMethod = obtainFirstMatchRequestMethod(obtainRequestMethod(joinPoint));
-            OperateTypeEnum operateLogType = convertOperateLogType(requestMethod);
+            OperateType operateLogType = convertOperateLogType(requestMethod);
             operateLogObj.setType(operateLogType != null ? operateLogType.getType() : null);
         }
         // content 和 exts 属性
@@ -265,21 +265,21 @@ public class OperateLogAspect {
         return requestMethods[0];
     }
 
-    private static OperateTypeEnum convertOperateLogType(RequestMethod requestMethod) {
+    private static OperateType convertOperateLogType(RequestMethod requestMethod) {
         if (requestMethod == null) {
             return null;
         }
         switch (requestMethod) {
             case GET:
-                return OperateTypeEnum.GET;
+                return OperateType.GET;
             case POST:
-                return OperateTypeEnum.CREATE;
+                return OperateType.CREATE;
             case PUT:
-                return OperateTypeEnum.UPDATE;
+                return OperateType.UPDATE;
             case DELETE:
-                return OperateTypeEnum.DELETE;
+                return OperateType.DELETE;
             default:
-                return OperateTypeEnum.OTHER;
+                return OperateType.OTHER;
         }
     }
 

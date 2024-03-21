@@ -22,12 +22,12 @@ public enum LoginResult {
     BAD_CREDENTIALS(10),
 
     /**
-     * 邮箱或验证码不正确
+     * 手机验证码不正确
      */
     BAD_MOBILE_CODE(11),
 
     /**
-     * 邮箱或验证码不正确
+     * 邮箱验证码不正确
      */
     BAD_EMAIL_CODE(12),
 

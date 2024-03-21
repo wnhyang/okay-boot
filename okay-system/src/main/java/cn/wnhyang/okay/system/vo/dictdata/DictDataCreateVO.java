@@ -14,7 +14,6 @@ import javax.validation.constraints.Size;
 @Data
 public class DictDataCreateVO {
 
-    @NotNull(message = "显示顺序不能为空")
     private Integer sort;
 
     @NotBlank(message = "字典标签不能为空")
