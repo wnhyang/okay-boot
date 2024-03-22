@@ -7,8 +7,8 @@ import cn.hutool.core.util.ReUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.wnhyang.okay.framework.common.core.Login;
 import cn.wnhyang.okay.framework.common.enums.CommonStatus;
-import cn.wnhyang.okay.framework.common.enums.DeviceTypeEnum;
-import cn.wnhyang.okay.framework.common.enums.UserTypeEnum;
+import cn.wnhyang.okay.framework.common.enums.DeviceType;
+import cn.wnhyang.okay.framework.common.enums.UserType;
 import cn.wnhyang.okay.framework.common.util.RegexUtils;
 import cn.wnhyang.okay.framework.common.util.ServletUtils;
 import cn.wnhyang.okay.framework.web.core.service.LoginService;
@@ -17,7 +17,7 @@ import cn.wnhyang.okay.system.dto.UserCreateDTO;
 import cn.wnhyang.okay.system.enums.login.LoginResult;
 import cn.wnhyang.okay.system.enums.login.LoginType;
 import cn.wnhyang.okay.system.login.LoginUser;
-import cn.wnhyang.okay.system.redis.RedisKeys;
+import cn.wnhyang.okay.system.redis.RedisKey;
 import cn.wnhyang.okay.system.vo.login.EmailLoginVO;
 import cn.wnhyang.okay.system.vo.login.LoginRespVO;
 import cn.wnhyang.okay.system.vo.login.LoginVO;
@@ -77,7 +77,7 @@ public class AuthService {
         }
 
         // 创建 Token 令牌，记录登录日志
-        loginService.login(user, DeviceTypeEnum.PC);
+        loginService.login(user, DeviceType.PC);
         createLoginLog(user.getId(), account, loginType, LoginResult.SUCCESS);
         LoginRespVO loginRespVO = new LoginRespVO();
         loginRespVO.setUserId(user.getId());
@@ -97,7 +97,7 @@ public class AuthService {
         } else {
             throw exception(AUTH_LOGIN_BAD_CREDENTIALS);
         }
-        String emailCode = valueOperations.get(RedisKeys.EMAIL_CODE);
+        String emailCode = valueOperations.get(RedisKey.EMAIL_CODE);
         if (!code.equals(emailCode)) {
             createLoginLog(user.getId(), email, loginType, LoginResult.BAD_EMAIL_CODE);
             throw exception(AUTH_LOGIN_BAD_EMAIL_CODE);
@@ -109,7 +109,7 @@ public class AuthService {
         }
 
         // 创建 Token 令牌，记录登录日志
-        loginService.login(user, DeviceTypeEnum.PC);
+        loginService.login(user, DeviceType.PC);
         createLoginLog(user.getId(), email, loginType, LoginResult.SUCCESS);
         LoginRespVO loginRespVO = new LoginRespVO();
         loginRespVO.setUserId(user.getId());
@@ -132,7 +132,7 @@ public class AuthService {
     public void register(RegisterVO reqVO) {
         String username = reqVO.getUsername();
         String password = reqVO.getPassword();
-        Integer userType = UserTypeEnum.valueOf(reqVO.getUserType()).getType();
+        Integer userType = UserType.valueOf(reqVO.getUserType()).getType();
         UserCreateDTO reqDTO = new UserCreateDTO();
         reqDTO.setUsername(username);
         reqDTO.setNickname(username);
@@ -146,7 +146,7 @@ public class AuthService {
         LoginLogCreateDTO reqDTO = new LoginLogCreateDTO();
         reqDTO.setLoginType(loginType.getType());
         reqDTO.setUserId(userId);
-        reqDTO.setUserType(UserTypeEnum.PC.getType());
+        reqDTO.setUserType(UserType.PC.getType());
         reqDTO.setAccount(account);
         reqDTO.setUserAgent(ServletUtils.getUserAgent());
         reqDTO.setUserIp(ServletUtils.getClientIP());

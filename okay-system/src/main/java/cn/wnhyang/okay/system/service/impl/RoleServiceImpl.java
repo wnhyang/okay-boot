@@ -8,7 +8,7 @@ import cn.wnhyang.okay.system.convert.RoleConvert;
 import cn.wnhyang.okay.system.entity.RolePO;
 import cn.wnhyang.okay.system.mapper.RoleMapper;
 import cn.wnhyang.okay.system.mapper.UserRoleMapper;
-import cn.wnhyang.okay.system.redis.RedisKeys;
+import cn.wnhyang.okay.system.redis.RedisKey;
 import cn.wnhyang.okay.system.service.PermissionService;
 import cn.wnhyang.okay.system.service.RoleService;
 import cn.wnhyang.okay.system.vo.role.RoleCreateVO;
@@ -63,7 +63,7 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    @CacheEvict(value = RedisKeys.ROLE, key = "#reqVO.id")
+    @CacheEvict(value = RedisKey.ROLE, key = "#reqVO.id")
     @Transactional(rollbackFor = Exception.class)
     public void updateRole(RoleUpdateVO reqVO) {
         // 校验是否可以更新
@@ -77,7 +77,7 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    @CacheEvict(value = RedisKeys.ROLE, key = "#id")
+    @CacheEvict(value = RedisKey.ROLE, key = "#id")
     @Transactional(rollbackFor = Exception.class)
     public void updateRoleStatus(Long id, Boolean status) {
         // 校验是否可以更新
@@ -89,7 +89,7 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    @CacheEvict(value = RedisKeys.ROLE, key = "#id")
+    @CacheEvict(value = RedisKey.ROLE, key = "#id")
     @Transactional(rollbackFor = Exception.class)
     public void deleteRole(Long id) {
         // 校验是否可以删除

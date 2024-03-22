@@ -2,7 +2,7 @@ package cn.wnhyang.okay.framework.security.core.service;
 
 import cn.dev33.satoken.stp.StpInterface;
 import cn.wnhyang.okay.framework.common.core.Login;
-import cn.wnhyang.okay.framework.common.enums.UserTypeEnum;
+import cn.wnhyang.okay.framework.common.enums.UserType;
 import cn.wnhyang.okay.framework.web.core.service.LoginService;
 import lombok.Setter;
 
@@ -31,8 +31,8 @@ public class StpInterfaceImpl implements StpInterface {
     @Override
     public List<String> getPermissionList(Object loginId, String loginType) {
         Login loginUser = loginService.getLoginUser();
-        UserTypeEnum userType = UserTypeEnum.valueOf(loginUser.getType());
-        if (userType == UserTypeEnum.PC) {
+        UserType userType = UserType.valueOf(loginUser.getType());
+        if (userType == UserType.PC) {
             return new ArrayList<>(loginUser.getPermissions());
         }
 
@@ -49,8 +49,8 @@ public class StpInterfaceImpl implements StpInterface {
     @Override
     public List<String> getRoleList(Object loginId, String loginType) {
         Login loginUser = loginService.getLoginUser();
-        UserTypeEnum userType = UserTypeEnum.valueOf(loginUser.getType());
-        if (userType == UserTypeEnum.PC) {
+        UserType userType = UserType.valueOf(loginUser.getType());
+        if (userType == UserType.PC) {
             return new ArrayList<>(loginUser.getRoleValues());
         }
 

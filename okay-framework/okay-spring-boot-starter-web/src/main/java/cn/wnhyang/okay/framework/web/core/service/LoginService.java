@@ -1,7 +1,7 @@
 package cn.wnhyang.okay.framework.web.core.service;
 
 import cn.wnhyang.okay.framework.common.core.Login;
-import cn.wnhyang.okay.framework.common.enums.DeviceTypeEnum;
+import cn.wnhyang.okay.framework.common.enums.DeviceType;
 import cn.wnhyang.okay.framework.common.enums.UserConstants;
 
 import static cn.wnhyang.okay.framework.common.exception.GlobalErrorCode.UNAUTHORIZED;
@@ -19,7 +19,7 @@ public interface LoginService {
      * @param loginUser  登录信息
      * @param deviceEnum 设备类型
      */
-    void login(Login loginUser, DeviceTypeEnum deviceEnum);
+    void login(Login loginUser, DeviceType deviceEnum);
 
     /**
      * 获取当前登录用户

@@ -6,10 +6,11 @@ import lombok.Getter;
 
 /**
  * 全局用户类型枚举
+ * @author wnhyang
  */
 @AllArgsConstructor
 @Getter
-public enum UserTypeEnum {
+public enum UserType {
 
     /**
      * pc用户
@@ -36,8 +37,8 @@ public enum UserTypeEnum {
      */
     private final Integer type;
 
-    public static UserTypeEnum valueOf(Integer value) {
-        return ArrayUtil.firstMatch(userType -> userType.getType().equals(value), UserTypeEnum.values());
+    public static UserType valueOf(Integer value) {
+        return ArrayUtil.firstMatch(userType -> userType.getType().equals(value), UserType.values());
     }
 
 }
