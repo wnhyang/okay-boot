@@ -6,6 +6,7 @@ import lombok.Getter;
 
 /**
  * 全局用户类型枚举
+ *
  * @author wnhyang
  */
 @AllArgsConstructor

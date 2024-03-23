@@ -3,7 +3,7 @@ package cn.wnhyang.okay.system.controller;
 import cn.dev33.satoken.annotation.SaCheckLogin;
 import cn.wnhyang.okay.framework.common.pojo.CommonResult;
 import cn.wnhyang.okay.framework.log.core.annotation.OperateLog;
-import cn.wnhyang.okay.framework.web.core.service.LoginService;
+import cn.wnhyang.okay.framework.satoken.core.util.LoginUtil;
 import cn.wnhyang.okay.system.convert.UserConvert;
 import cn.wnhyang.okay.system.entity.UserPO;
 import cn.wnhyang.okay.system.service.UserService;
@@ -28,8 +28,6 @@ public class UserProfileController {
 
     private final UserService userService;
 
-    private final LoginService loginService;
-
     /**
      * 查询登录用户信息
      *
@@ -39,7 +37,7 @@ public class UserProfileController {
     @OperateLog(module = "后台-用户设置", name = "查询登录用户信息")
     @SaCheckLogin
     public CommonResult<UserProfileVO> getUserProfile() {
-        UserPO user = userService.getUserById(loginService.getUserId());
+        UserPO user = userService.getUserById(LoginUtil.getUserId());
 
         return CommonResult.success(UserConvert.INSTANCE.convert04(user));
     }
@@ -51,7 +49,7 @@ public class UserProfileController {
     @OperateLog(module = "后台-用户设置", name = "修改用户信息")
     @SaCheckLogin
     public CommonResult<Boolean> updateUserProfile(@Valid @RequestBody UserProfileUpdateVO reqVO) {
-        userService.updateUserProfile(loginService.getUserId(), reqVO);
+        userService.updateUserProfile(LoginUtil.getUserId(), reqVO);
         return CommonResult.success(true);
     }
 
@@ -65,7 +63,7 @@ public class UserProfileController {
     @OperateLog(module = "后台-用户设置", name = "修改用户密码")
     @SaCheckLogin
     public CommonResult<Boolean> updateUserPassword(@Valid @RequestBody UserProfileUpdatePasswordVO reqVO) {
-        userService.updateUserPassword(loginService.getUserId(), reqVO);
+        userService.updateUserPassword(LoginUtil.getUserId(), reqVO);
         return CommonResult.success(true);
     }
 

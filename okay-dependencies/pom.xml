@@ -39,7 +39,7 @@
         <jsoup.version>1.17.2</jsoup.version>
         <lombok.version>1.18.24</lombok.version>
         <mapstruct.version>1.5.5.Final</mapstruct.version>
-        <hutool.version>5.8.22</hutool.version>
+        <hutool.version>5.8.26</hutool.version>
         <easyexcel.verion>3.2.0</easyexcel.verion>
         <velocity.version>2.3</velocity.version>
         <screw.version>1.0.5</screw.version>
@@ -202,6 +202,12 @@
             <dependency>
                 <groupId>cn.wnhyang.boot</groupId>
                 <artifactId>okay-spring-boot-starter-web</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>cn.wnhyang.boot</groupId>
+                <artifactId>okay-spring-boot-starter-satoken</artifactId>
                 <version>${project.version}</version>
             </dependency>
 

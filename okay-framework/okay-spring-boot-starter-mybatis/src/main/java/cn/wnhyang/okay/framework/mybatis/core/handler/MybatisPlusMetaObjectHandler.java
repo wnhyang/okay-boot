@@ -3,7 +3,7 @@ package cn.wnhyang.okay.framework.mybatis.core.handler;
 import cn.hutool.core.util.ObjectUtil;
 import cn.wnhyang.okay.framework.common.core.Login;
 import cn.wnhyang.okay.framework.mybatis.core.base.BasePO;
-import cn.wnhyang.okay.framework.web.core.service.LoginService;
+import cn.wnhyang.okay.framework.satoken.core.util.LoginUtil;
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
@@ -21,8 +21,6 @@ import java.util.Objects;
 public class MybatisPlusMetaObjectHandler implements MetaObjectHandler {
 
     private Boolean login;
-
-    private LoginService loginService;
 
     @Override
     public void insertFill(MetaObject metaObject) {
@@ -76,7 +74,7 @@ public class MybatisPlusMetaObjectHandler implements MetaObjectHandler {
     private String getLoginUsername() {
         Login loginUser;
         try {
-            loginUser = loginService.getLoginUser();
+            loginUser = LoginUtil.getLoginUser();
         } catch (Exception e) {
             log.warn("自动注入警告 => 用户未登录");
             return null;

@@ -1,9 +1,9 @@
-package cn.wnhyang.okay.framework.security.core.service;
+package cn.wnhyang.okay.framework.satoken.core.service;
 
 import cn.dev33.satoken.stp.StpInterface;
 import cn.wnhyang.okay.framework.common.core.Login;
 import cn.wnhyang.okay.framework.common.enums.UserType;
-import cn.wnhyang.okay.framework.web.core.service.LoginService;
+import cn.wnhyang.okay.framework.satoken.core.util.LoginUtil;
 import lombok.Setter;
 
 import java.util.ArrayList;
@@ -17,11 +17,6 @@ import java.util.List;
 public class StpInterfaceImpl implements StpInterface {
 
     /**
-     * 登录服务
-     */
-    private LoginService loginService;
-
-    /**
      * 返回指定账号id所拥有的权限码集合
      *
      * @param loginId   账号id
@@ -30,7 +25,7 @@ public class StpInterfaceImpl implements StpInterface {
      */
     @Override
     public List<String> getPermissionList(Object loginId, String loginType) {
-        Login loginUser = loginService.getLoginUser();
+        Login loginUser = LoginUtil.getLoginUser();
         UserType userType = UserType.valueOf(loginUser.getType());
         if (userType == UserType.PC) {
             return new ArrayList<>(loginUser.getPermissions());
@@ -48,7 +43,7 @@ public class StpInterfaceImpl implements StpInterface {
      */
     @Override
     public List<String> getRoleList(Object loginId, String loginType) {
-        Login loginUser = loginService.getLoginUser();
+        Login loginUser = LoginUtil.getLoginUser();
         UserType userType = UserType.valueOf(loginUser.getType());
         if (userType == UserType.PC) {
             return new ArrayList<>(loginUser.getRoleValues());

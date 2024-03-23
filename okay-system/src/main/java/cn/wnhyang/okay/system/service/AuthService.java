@@ -11,7 +11,7 @@ import cn.wnhyang.okay.framework.common.enums.DeviceType;
 import cn.wnhyang.okay.framework.common.enums.UserType;
 import cn.wnhyang.okay.framework.common.util.RegexUtils;
 import cn.wnhyang.okay.framework.common.util.ServletUtils;
-import cn.wnhyang.okay.framework.web.core.service.LoginService;
+import cn.wnhyang.okay.framework.satoken.core.util.LoginUtil;
 import cn.wnhyang.okay.system.dto.LoginLogCreateDTO;
 import cn.wnhyang.okay.system.dto.UserCreateDTO;
 import cn.wnhyang.okay.system.enums.login.LoginResult;
@@ -44,8 +44,6 @@ public class AuthService {
 
     private final LoginLogService loginLogService;
 
-    private final LoginService loginService;
-
     private final ValueOperations<String, String> valueOperations;
 
     public LoginRespVO login(LoginVO reqVO) {
@@ -77,7 +75,7 @@ public class AuthService {
         }
 
         // 创建 Token 令牌，记录登录日志
-        loginService.login(user, DeviceType.PC);
+        LoginUtil.login(user, DeviceType.PC);
         createLoginLog(user.getId(), account, loginType, LoginResult.SUCCESS);
         LoginRespVO loginRespVO = new LoginRespVO();
         loginRespVO.setUserId(user.getId());
@@ -109,7 +107,7 @@ public class AuthService {
         }
 
         // 创建 Token 令牌，记录登录日志
-        loginService.login(user, DeviceType.PC);
+        LoginUtil.login(user, DeviceType.PC);
         createLoginLog(user.getId(), email, loginType, LoginResult.SUCCESS);
         LoginRespVO loginRespVO = new LoginRespVO();
         loginRespVO.setUserId(user.getId());
@@ -122,7 +120,7 @@ public class AuthService {
     }
 
     public void logout() {
-        Login loginUser = loginService.getLoginUser();
+        Login loginUser = LoginUtil.getLoginUser();
         if (loginUser != null) {
             StpUtil.logout();
             createLoginLog(loginUser.getId(), loginUser.getUsername(), LoginType.LOGOUT_SELF, LoginResult.SUCCESS);

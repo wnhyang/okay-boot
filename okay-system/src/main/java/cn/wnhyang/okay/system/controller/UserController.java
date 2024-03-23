@@ -6,7 +6,7 @@ import cn.wnhyang.okay.framework.common.core.Login;
 import cn.wnhyang.okay.framework.common.pojo.CommonResult;
 import cn.wnhyang.okay.framework.common.pojo.PageResult;
 import cn.wnhyang.okay.framework.log.core.annotation.OperateLog;
-import cn.wnhyang.okay.framework.web.core.service.LoginService;
+import cn.wnhyang.okay.framework.satoken.core.util.LoginUtil;
 import cn.wnhyang.okay.system.convert.MenuConvert;
 import cn.wnhyang.okay.system.convert.UserConvert;
 import cn.wnhyang.okay.system.entity.MenuPO;
@@ -46,8 +46,6 @@ public class UserController {
     private final MenuService menuService;
 
     private final PermissionService permissionService;
-
-    private final LoginService loginService;
 
     /**
      * 创建用户
@@ -171,7 +169,7 @@ public class UserController {
     @OperateLog(module = "后台-用户", name = "查询用户信息")
     @SaCheckLogin
     public CommonResult<UserInfoVO> getUserInfo() {
-        Login loginUser = loginService.getLoginUser();
+        Login loginUser = LoginUtil.getLoginUser();
 
         if (loginUser == null) {
             return CommonResult.error(UNAUTHORIZED);
@@ -186,7 +184,7 @@ public class UserController {
         respVO.setPermissions(loginUser.getPermissions());
 
         List<MenuPO> menus;
-        if (loginService.isAdministrator(id)) {
+        if (LoginUtil.isAdministrator(id)) {
             menus = menuService.getMenuList();
         } else {
             Set<Long> menuIds = permissionService.getRoleMenuListByRoleId(loginUser.getRoleIds());

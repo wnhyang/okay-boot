@@ -12,7 +12,7 @@ import cn.wnhyang.okay.framework.log.core.annotation.OperateLog;
 import cn.wnhyang.okay.framework.log.core.dto.LogCreateReqDTO;
 import cn.wnhyang.okay.framework.log.core.enums.OperateType;
 import cn.wnhyang.okay.framework.log.core.service.LogService;
-import cn.wnhyang.okay.framework.web.core.service.LoginService;
+import cn.wnhyang.okay.framework.satoken.core.util.LoginUtil;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -71,8 +71,6 @@ public class OperateLogAspect {
 
     private LogService logService;
 
-    private LoginService loginService;
-
     @Around("@annotation(operateLog) && @within(org.springframework.web.bind.annotation.RestController)")
     public Object around(ProceedingJoinPoint joinPoint, OperateLog operateLog) throws Throwable {
         return around0(joinPoint, operateLog);
@@ -99,7 +97,7 @@ public class OperateLogAspect {
             operateLogObj.setStartTime(startTime);
             // 补充用户信息
             try {
-                Long userId = loginService.getUserId();
+                Long userId = LoginUtil.getUserId();
                 operateLogObj.setUserId(userId);
             } catch (Exception e) {
                 operateLogObj.setUserId(0L);

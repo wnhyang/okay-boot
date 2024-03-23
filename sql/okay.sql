@@ -179,3 +179,86 @@ create table if not exists sys_user_role
     deleted     bit         default b'0'              null comment '是否删除'
 ) comment '用户和角色关联表' charset = utf8mb4;
 
+
+INSERT INTO okay.sys_dict_data (label, value, dict_type, color, status, remark)
+VALUES ('开启', 'false', 'common_status', 'green', 0, '通用状态-开启'),
+       ('关闭', 'true', 'common_status', 'red', 0, '通用状态-关闭'),
+       ('目录', '0', 'system_menu_type', 'blue', 0, NULL),
+       ('菜单', '1', 'system_menu_type', 'green', 0, NULL),
+       ('按钮', '2', 'system_menu_type', 'red', 0, NULL),
+       ('男', '1', 'common_sex', 'blue', 0, NULL),
+       ('女', '2', 'common_sex', 'red', 0, NULL),
+       ('未知', '0', 'common_sex', 'default', 0, NULL),
+       ('账号密码登录', '100', 'system_login_type', 'pink', 0, NULL),
+       ('手机号密码登录', '101', 'system_login_type', 'red', 0, NULL),
+       ('邮箱密码登录', '102', 'system_login_type', 'orange', 0, NULL),
+       ('手机号验证码登录', '103', 'system_login_type', 'green', 0, NULL),
+       ('邮箱验证码登录', '104', 'system_login_type', 'cyan', 0, NULL),
+       ('自己退出', '120', 'system_login_type', 'purple', 0, NULL),
+       ('登录成功', '0', 'system_login_result', 'green', 0, NULL),
+       ('账号或密码不正确', '10', 'system_login_result', 'pink', 0, NULL),
+       ('手机验证码不正确', '11', 'system_login_result', 'red', 0, NULL),
+       ('邮箱验证码不正确', '12', 'system_login_result', 'orange', 0, NULL),
+       ('未知异常', '100', 'system_login_result', 'default', 0, NULL),
+       ('用户被禁用', '20', 'system_login_result', 'blue', 0, NULL),
+       ('新增', '2', 'system_operate_type', 'cyan', 0, NULL),
+       ('修改', '3', 'system_operate_type', 'blue', 0, NULL),
+       ('查询', '1', 'system_operate_type', 'green', 0, NULL),
+       ('删除', '4', 'system_operate_type', 'red', 0, NULL),
+       ('导出', '5', 'system_operate_type', 'pink', 0, NULL),
+       ('导入', '6', 'system_operate_type', 'orange', 0, NULL),
+       ('其他', '0', 'system_operate_type', 'default', 0, NULL);
+INSERT INTO okay.sys_dict_type (name, `type`, status, standard, remark)
+VALUES ('通用状态', 'common_status', 0, 0, '通用状态'),
+       ('菜单类型', 'system_menu_type', 0, 0, '菜单类型'),
+       ('通用性别', 'common_sex', 0, 0, '通用性别'),
+       ('登录类型', 'system_login_type', 0, 0, NULL),
+       ('登录结果', 'system_login_result', 0, 0, NULL),
+       ('操作类型', 'system_operate_type', 0, 0, NULL);
+INSERT INTO okay.sys_menu (name, permission, `type`, order_no, parent_id, `path`, icon, component, hide_breadcrumb,
+                           current_active_menu, keepalive, title, redirect, status, is_show, is_ext)
+VALUES ('System', NULL, 0, 0, 0, '/system', 'ant-design:audit-outlined', NULL, 0, NULL, 0, '系统管理', '/system/user',
+        0, 0, 0),
+       ('User', 'system:user:list', 1, 0, 1, 'user', 'ant-design:user-outlined', 'system/user/index', 0, NULL, 0,
+        '用户管理', NULL, 0, 0, 0),
+       ('Role', 'system:role:list', 1, 1, 1, 'role', 'ant-design:crown-outlined', 'system/role/index', 0, NULL, 0,
+        '角色管理', NULL, 0, 0, 0),
+       ('Menu', 'system:menu:list', 1, 2, 1, 'menu', 'ant-design:menu-fold-outlined', 'system/menu/index', 0, NULL, 0,
+        '菜单管理', NULL, 0, 0, 0),
+       ('Password', NULL, 1, 97, 1, 'password', 'ant-design:unlock-outlined', 'system/password/index', 0, NULL, 0,
+        '修改密码', NULL, 0, 0, 0),
+       ('Log', NULL, 0, 99, 1, 'log', 'ant-design:ordered-list-outlined', NULL, 0, NULL, 0, '日志管理',
+        '/system/log/loginlog', 0, 0, 0),
+       ('Dict', NULL, 0, 4, 1, 'dict', 'ant-design:medicine-box-outlined', NULL, 0, NULL, 0, '字典管理',
+        '/system/dict/dicttype', 0, 0, 0),
+       ('Loginlog', NULL, 1, 0, 104, 'loginlog', 'ant-design:login-outlined', 'system/loginLog/index', 0, NULL, 0,
+        '登录日志', NULL, 0, 0, 0),
+       ('Operatelog', NULL, 1, 0, 104, 'operatelog', 'ant-design:logout-outlined', 'system/operateLog/index', 0, NULL,
+        0, '操作日志', NULL, 0, 0, 0),
+       (NULL, 'system:user:create', 2, 0, 100, '', '', '', 0, NULL, 0, '用户新增', NULL, 0, 0, 0),
+       (NULL, 'system:user:update', 2, 0, 100, '', '', '', 0, NULL, 0, '用户更新', NULL, 0, 0, 0),
+       (NULL, 'system:user:delete', 2, 0, 100, '', '', '', 0, NULL, 0, '用户删除', NULL, 0, 0, 0),
+       (NULL, 'system:user:query', 2, 0, 100, '', '', '', 0, NULL, 0, '用户查询', NULL, 0, 0, 0),
+       (NULL, 'system:menu:create', 2, 0, 102, '', '', '', 0, NULL, 0, '菜单新增', NULL, 0, 0, 0),
+       (NULL, 'system:menu:update', 2, 0, 102, '', '', '', 0, NULL, 0, '菜单更新', NULL, 0, 0, 0),
+       (NULL, 'system:menu:delete', 2, 0, 102, '', '', '', 0, NULL, 0, '菜单删除', NULL, 0, 0, 0),
+       (NULL, 'system:menu:query', 2, 0, 102, '', '', '', 0, NULL, 0, '菜单查询', NULL, 0, 0, 0),
+       (NULL, 'system:role:create', 2, 0, 101, '', '', '', 0, NULL, 0, '角色新增', NULL, 0, 0, 0),
+       (NULL, 'system:role:update', 2, 0, 101, '', '', '', 0, NULL, 0, '角色更新', NULL, 0, 0, 0),
+       (NULL, 'system:role:delete', 2, 0, 101, '', '', '', 0, NULL, 0, '角色删除', NULL, 0, 0, 0),
+       (NULL, 'system:role:query', 2, 0, 101, '', '', '', 0, NULL, 0, '角色查询', NULL, 0, 0, 0),
+       ('DictType', NULL, 1, 0, 105, 'dicttype', 'ant-design:book-outlined', 'system/dictType/index', 0, NULL, 0,
+        '字典类型', NULL, 0, 0, 0),
+       ('DictData', NULL, 1, 0, 105, 'dictdata', 'ant-design:behance-outlined', 'system/dictData/index', 0, NULL, 0,
+        '字典数据', NULL, 0, 0, 0),
+       ('UserDetail', NULL, 1, 0, 1, 'userDetail/:id', 'ant-design:carry-out-twotone', 'system/user/UserDetail', 0,
+        '/system/user', 0, '用户详情', NULL, 0, 1, 0);
+
+INSERT INTO okay.sys_user (id, username, password, nickname, `type`, remark, email, mobile, sex, avatar, status)
+VALUES (1, 'admin', '$2a$10$FjEJ6Kg6NTPEU8yBjQQcR.IN4q/UNDseTs4GqwyO8gi9I2bJQ.ZZi', 'admin', 0, NULL, 'wnhyang@qq.com',
+        '17317430552', 0, '', 0);
+INSERT INTO okay.sys_role (id, name, value, sort, status, remark)
+VALUES (1, '超级管理员', 'administrator', 0, 0, NULL);
+INSERT INTO okay.sys_user_role (user_id, role_id)
+VALUES (1, 1);
+

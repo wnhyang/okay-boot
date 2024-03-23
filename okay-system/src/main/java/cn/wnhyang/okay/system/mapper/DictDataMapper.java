@@ -36,7 +36,7 @@ public interface DictDataMapper extends BaseMapperX<DictDataPO> {
         return selectOne(DictDataPO::getDictType, dictType, DictDataPO::getValue, value);
     }
 
-    default List<DictDataPO> selectListByDictType(String type){
+    default List<DictDataPO> selectListByDictType(String type) {
         return selectList(DictDataPO::getDictType, type);
     }
 }

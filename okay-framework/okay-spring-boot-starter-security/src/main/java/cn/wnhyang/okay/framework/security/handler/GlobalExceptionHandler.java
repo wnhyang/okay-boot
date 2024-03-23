@@ -1,4 +1,4 @@
-package cn.wnhyang.okay.framework.security.core.handler;
+package cn.wnhyang.okay.framework.security.handler;
 
 import cn.dev33.satoken.exception.NotLoginException;
 import cn.dev33.satoken.exception.NotPermissionException;
