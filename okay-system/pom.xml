@@ -22,6 +22,10 @@
         <!-- Web 相关 -->
         <dependency>
             <groupId>cn.wnhyang.boot</groupId>
+            <artifactId>okay-spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>cn.wnhyang.boot</groupId>
             <artifactId>okay-spring-boot-starter-security</artifactId>
         </dependency>
 

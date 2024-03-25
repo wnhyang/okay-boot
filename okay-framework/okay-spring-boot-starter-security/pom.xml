@@ -16,7 +16,7 @@
 
         <dependency>
             <groupId>cn.wnhyang.boot</groupId>
-            <artifactId>okay-spring-boot-starter-web</artifactId>
+            <artifactId>okay-spring-boot-starter-satoken</artifactId>
         </dependency>
 
         <!-- Sa-Token 权限认证, 在线文档：http://sa-token.dev33.cn/ -->
