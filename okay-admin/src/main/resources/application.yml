@@ -41,7 +41,7 @@ spring:
       shutdown-timeout: 100ms
     password: re*g%j$R#Dk
 
-  # mybatis-plus
+# mybatis-plus
 mybatis-plus:
   configuration:
     map-underscore-to-camel-case: true
