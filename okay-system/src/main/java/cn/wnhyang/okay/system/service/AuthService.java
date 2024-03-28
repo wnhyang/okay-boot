@@ -52,13 +52,13 @@ public class AuthService {
         LoginType loginType;
         if (StrUtil.isNotEmpty(account)) {
             if (ReUtil.isMatch(RegexUtils.MOBILE, account)) {
-                user = userService.getUserInfo(account, account, "");
+                user = userService.getLoginUser(account, account, "");
                 loginType = LoginType.LOGIN_MOBILE;
             } else if (ReUtil.isMatch(RegexUtils.EMAIL, account)) {
-                user = userService.getUserInfo(account, "", account);
+                user = userService.getLoginUser(account, "", account);
                 loginType = LoginType.LOGIN_EMAIL;
             } else {
-                user = userService.getUserInfo(account, "", "");
+                user = userService.getLoginUser(account, "", "");
                 loginType = LoginType.LOGIN_USERNAME;
             }
         } else {
@@ -90,7 +90,7 @@ public class AuthService {
         LoginUser user;
         LoginType loginType;
         if (StrUtil.isNotEmpty(email) && ReUtil.isMatch(RegexUtils.EMAIL, email)) {
-            user = userService.getUserInfo("", "", email);
+            user = userService.getLoginUser("", "", email);
             loginType = LoginType.LOGIN_EMAIL_CODE;
         } else {
             throw exception(AUTH_LOGIN_BAD_CREDENTIALS);

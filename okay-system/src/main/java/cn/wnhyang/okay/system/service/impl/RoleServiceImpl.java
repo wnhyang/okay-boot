@@ -11,7 +11,6 @@ import cn.wnhyang.okay.system.mapper.RoleMapper;
 import cn.wnhyang.okay.system.mapper.RoleMenuMapper;
 import cn.wnhyang.okay.system.mapper.UserRoleMapper;
 import cn.wnhyang.okay.system.redis.RedisKey;
-import cn.wnhyang.okay.system.service.PermissionService;
 import cn.wnhyang.okay.system.service.RoleService;
 import cn.wnhyang.okay.system.vo.role.RoleCreateVO;
 import cn.wnhyang.okay.system.vo.role.RolePageVO;
@@ -45,8 +44,6 @@ public class RoleServiceImpl implements RoleService {
     private final RoleMenuMapper roleMenuMapper;
 
     private final UserRoleMapper userRoleMapper;
-
-    private final PermissionService permissionService;
 
     @Override
     public List<RolePO> getRoleList(Collection<Long> ids) {
@@ -105,11 +102,13 @@ public class RoleServiceImpl implements RoleService {
     @Transactional(rollbackFor = Exception.class)
     public void deleteRole(Long id) {
         // 校验是否可以删除
+        // 1、存在角色
+        // 2、没有用户关联角色
         validateRoleForDelete(id);
         // 标记删除
         roleMapper.deleteById(id);
         // 删除相关数据
-        permissionService.deleteRoleById(id);
+        roleMenuMapper.deleteByRoleId(id);
     }
 
     @Override
