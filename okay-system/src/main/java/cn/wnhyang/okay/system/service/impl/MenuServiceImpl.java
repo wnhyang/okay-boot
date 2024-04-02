@@ -297,7 +297,7 @@ public class MenuServiceImpl implements MenuService {
             resultSet.add(menu);
 
             // 如果当前菜单不是根节点（即parentId不为0），继续查找其父菜单
-            if (menu.getParentId() != 0L && !processedIds.contains(menu.getParentId())) {
+            if (!Objects.equals(menu.getParentId(), ID_ROOT) && !processedIds.contains(menu.getParentId())) {
                 collectMenuParents(resultSet, menuMap, menu.getParentId(), processedIds);
             }
         }

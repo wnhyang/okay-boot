@@ -151,7 +151,7 @@ class MenuServiceImplTest {
 //        menuIds.addAll(childrenIds);
 //
 //        List<MenuTreeRespVO> allMenus = all.stream().filter(menu -> menuIds.contains(menu.getId()))
-//                .map(MenuConvert.INSTANCE::convert01).collect(Collectors.toList());
+//                .map(MenuConvert.INSTANCE::convert2MenuTreeRespVO).collect(Collectors.toList());
 //
 //        // 2、形成树形结合
 //        return allMenus.stream().filter((menu) ->
