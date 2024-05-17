@@ -22,7 +22,7 @@ spring:
           username: wnhyang
           password: f$g3*Wr@Dv&
           driver-class-name: com.mysql.cj.jdbc.Driver # 3.2.0开始支持SPI可省略此配置
-    # Cache 配置项
+  # Cache 配置项
   cache:
     type: REDIS
     redis:
